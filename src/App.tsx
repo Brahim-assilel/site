@@ -17,13 +17,12 @@ import { DemoPage } from "./pages/DemoPage";
 import { ServiceDetailPage } from "./pages/ServiceDetailPage";
 import { BlogIndexPage as BlogListPage } from "./pages/BlogIndexPage";
 import { BlogPostPage } from "./pages/BlogPostPage";
-import { BRAND_NAME } from "./config/brand";
 import { ContactPage } from "./pages/ContactPage";
 
 function App() {
   const [isLoading, setIsLoading] = useState(() => {
     try {
-      return sessionStorage.getItem("monapp_loader_seen") !== "1";
+      return sessionStorage.getItem("assilel-tech_loader_seen") !== "1";
     } catch {
       return true;
     }
@@ -33,7 +32,7 @@ function App() {
   useEffect(() => {
     if (!isLoading) return;
     try {
-      sessionStorage.setItem("monapp_loader_seen", "1");
+      sessionStorage.setItem("assilel-tech_loader_seen", "1");
     } catch {
       // Ignore storage errors and keep default behavior.
     }
@@ -76,7 +75,7 @@ function App() {
               />
               <motion.img
                 src={logoSrc}
-                alt={`Logo ${BRAND_NAME}`}
+                alt="Logo Assilel-Tech"
                 onError={() => setLogoSrc("/vite.svg")}
                 initial={{ opacity: 0, scale: 0.94 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -84,7 +83,7 @@ function App() {
                 className="relative object-contain h-auto w-[1080px] max-w-[95vw]"
               />
               <p className="relative mt-5 text-[11px] font-semibold tracking-[0.3em] text-cyan-100/90 uppercase">
-                {BRAND_NAME}
+                Assilel-Tech
               </p>
               <motion.div
                 initial={{ scaleX: 0.45, opacity: 0 }}

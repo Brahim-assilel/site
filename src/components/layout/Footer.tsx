@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { BRAND_NAME, CONTACT_EMAIL } from "../../config/brand";
+import { CONTACT_EMAIL } from "../../config/brand";
 
 export const Footer = () => (
   <footer className="relative py-16 border-t border-white/10 bg-slate-900/50 backdrop-blur-lg">
@@ -72,7 +72,7 @@ export const Footer = () => (
         </div>
       </div>
       <div className="pt-8 mt-16 text-sm text-center border-t border-white/10 text-slate-500">
-        © 2026 {BRAND_NAME}. Tous droits réservés.
+        © 2026 Assilel-Tech. Tous droits réservés.
       </div>
     </div>
   </footer>

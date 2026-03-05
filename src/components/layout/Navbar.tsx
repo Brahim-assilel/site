@@ -9,7 +9,6 @@ import {
 import { Link } from "react-router-dom";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { Button } from "../ui/Button";
-import { BRAND_NAME } from "../../config/brand";
 import { trackEvent } from "../../lib/analytics";
 import { voipMenuLinks } from "../../data/voip";
 import { services } from "../../data/services";
@@ -183,8 +182,8 @@ export const Navbar = () => {
           href="/"
           className="flex items-center gap-2 ml-3 md:ml-4 focus:outline-none"
         >
-          <span className="text-xl font-extrabold tracking-wide text-cyan-300 md:text-2xl drop-shadow-[0_0_8px_rgba(0,246,255,0.5)]">
-            {BRAND_NAME}
+          <span className="text-xl font-extrabold tracking-wide text-slate-100 md:text-2xl">
+            ASSILEL<span className="text-cyan-400">-TECH</span>
           </span>
         </a>
 
