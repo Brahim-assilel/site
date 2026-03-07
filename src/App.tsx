@@ -27,7 +27,7 @@ function App() {
       return true;
     }
   });
-  const [logoSrc, setLogoSrc] = useState("/logo.png");
+  const [logoSrc, setLogoSrc] = useState("/biglogo.png");
 
   useEffect(() => {
     if (!isLoading) return;
