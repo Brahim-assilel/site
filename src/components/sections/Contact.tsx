@@ -139,7 +139,7 @@ export const Contact = () => {
                             ? "border-red-500 ring-red-500"
                             : "border-slate-700 focus:ring-blue-400"
                         }`}
-                        placeholder="Jean Dupont"
+                        //placeholder="Jean Dupont"
                       />
                       {errors.name && (
                         <p className="mt-1 text-xs text-red-400">
@@ -163,7 +163,7 @@ export const Contact = () => {
                             ? "border-red-500 ring-red-500"
                             : "border-slate-700 focus:ring-blue-400"
                         }`}
-                        placeholder="jean@societe.com"
+                        //placeholder="jean@societe.com"
                       />
                       {errors.email && (
                         <p className="mt-1 text-xs text-red-400">
@@ -186,7 +186,7 @@ export const Contact = () => {
                         value={formData.phone}
                         onChange={handleChange}
                         className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3.5 text-slate-100 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all"
-                        placeholder={CONTACT_PHONE}
+                        //placeholder={CONTACT_PHONE}
                       />
                     </div>
                   </div>
@@ -205,7 +205,7 @@ export const Contact = () => {
                         ? "border-red-500 ring-red-500"
                         : "border-slate-700 focus:ring-blue-400"
                     }`}
-                    placeholder="Décrivez votre projet ou votre question..."
+                    placeholder="Décrivez votre question ou votre projet..."
                   />
                   {errors.message && (
                     <p className="mt-1 text-xs text-red-500">

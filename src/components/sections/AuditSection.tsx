@@ -87,7 +87,7 @@ export const AuditSection = () => {
             </p>
           </div>
           {isSubmitted ? (
-            <div className="p-8 text-center bg-green-900/50 border border-green-500/50 rounded-lg">
+            <div className="p-8 text-center border rounded-lg bg-green-900/50 border-green-500/50">
               <h3 className="text-lg font-bold text-green-300">
                 Demande d'audit envoyée !
               </h3>
@@ -123,7 +123,7 @@ export const AuditSection = () => {
                         ? "border-red-500 ring-red-500"
                         : "border-slate-700 focus:ring-blue-400"
                     }`}
-                    placeholder="Jean Dupont"
+                    // placeholder="Jean Dupont"
                   />
                   {errors.name && (
                     <p className="mt-1 text-xs text-red-400">{errors.name}</p>
@@ -143,7 +143,7 @@ export const AuditSection = () => {
                         ? "border-red-500 ring-red-500"
                         : "border-slate-700 focus:ring-blue-400"
                     }`}
-                    placeholder="jean@societe.com"
+                    // placeholder="jean@societe.com"
                   />
                   {errors.email && (
                     <p className="mt-1 text-xs text-red-400">{errors.email}</p>

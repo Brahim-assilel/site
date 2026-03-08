@@ -31,9 +31,9 @@ const AnimatedNumber = ({ value }: { value: number }) => {
 
 const KeyFiguresSection = () => {
   const figures = [
-    { value: 50, label: "Projets Réussis", suffix: "+" },
+    { value: 12, label: "Projets Réussis", suffix: "+" },
     { value: 98, label: "Satisfaction Client", suffix: "%" },
-    { value: 10, label: "Ans d'Expertise", suffix: "+" },
+    { value: 3, label: "Ans d'Expertise", suffix: "+" },
     { value: 24, label: "Support", suffix: "/7" },
   ];
 
