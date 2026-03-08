@@ -1,3 +1,4 @@
+﻿import { Analytics } from "@vercel/analytics/react";
 import { useEffect, useRef } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
@@ -21,6 +22,7 @@ const ScrollToTop = () => {
       }, 100);
     }
   }, [pathname, hash]);
+
   return null;
 };
 
@@ -53,6 +55,7 @@ export const Layout = () => {
       <Footer />
       <ScrollToTopButton />
       <FloatingQuoteButton />
+      <Analytics />
     </div>
   );
 };
