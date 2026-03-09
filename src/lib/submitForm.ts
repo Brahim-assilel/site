@@ -2,6 +2,7 @@ type SubmitMode = "remote" | "local";
 
 type SubmitFormOptions = {
   allowLocalFallback?: boolean;
+  formName?: string;
 };
 
 export const submitForm = async (
@@ -9,9 +10,10 @@ export const submitForm = async (
   payload: Record<string, string>,
   options: SubmitFormOptions = {}
 ): Promise<SubmitMode> => {
-  const { allowLocalFallback = true } = options;
+  const { allowLocalFallback = true, formName } = options;
+  const resolvedEndpoint = endpoint?.trim() || "/api/form-submit";
 
-  if (!endpoint) {
+  if (!resolvedEndpoint) {
     if (!allowLocalFallback) {
       throw new Error(
         "Endpoint de formulaire non configuré. Définissez la variable d'environnement requise."
@@ -21,12 +23,15 @@ export const submitForm = async (
     return "local";
   }
 
-  const response = await fetch(endpoint, {
+  const response = await fetch(resolvedEndpoint, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(payload),
+    body: JSON.stringify({
+      ...payload,
+      formName,
+    }),
   });
 
   if (!response.ok) {

@@ -52,7 +52,8 @@ export const AuditSection = () => {
     try {
       const submitMode = await submitForm(
         import.meta.env.VITE_AUDIT_FORM_ENDPOINT,
-        formData
+        formData,
+        { formName: "audit" }
       );
       trackEvent("form_submit", {
         form_name: "audit",

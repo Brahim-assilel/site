@@ -22,23 +22,11 @@ import { PrivacyPolicyPage } from "./pages/PrivacyPolicyPage";
 import { TermsOfUsePage } from "./pages/TermsOfUsePage";
 
 function App() {
-  const [isLoading, setIsLoading] = useState(() => {
-    try {
-      return sessionStorage.getItem("assilel-tech_loader_seen") !== "1";
-    } catch {
-      return true;
-    }
-  });
+  const [isLoading, setIsLoading] = useState(true);
   const [logoSrc, setLogoSrc] = useState("/logo.png");
 
   useEffect(() => {
     if (!isLoading) return;
-    try {
-      sessionStorage.setItem("assilel-tech_loader_seen", "1");
-    } catch {
-      // Ignore storage errors and keep default behavior.
-    }
-
     const timer = setTimeout(() => setIsLoading(false), 1500);
     return () => clearTimeout(timer);
   }, [isLoading]);

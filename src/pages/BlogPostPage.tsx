@@ -1,91 +1,73 @@
-import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
+import { getPostBySlug } from "../data/blog";
 
-export const BlogListPage = () => {
-  const [posts, setPosts] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+const formatDate = (dateStr: string) => {
+  const date = new Date(dateStr);
+  if (Number.isNaN(date.getTime())) return dateStr;
+  return date.toLocaleDateString("fr-FR", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+};
 
-  useEffect(() => {
-    // On appelle notre pont Vercel
-    fetch("/api/posts")
-      .then((res) => res.json())
-      .then((data) => {
-        if (Array.isArray(data)) {
-          setPosts(data);
-        }
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Erreur de fetch :", err);
-        setLoading(false);
-      });
-  }, []);
+export const BlogPostPage = () => {
+  const { slug } = useParams();
+  const post = slug ? getPostBySlug(slug) : undefined;
+
+  if (!post) {
+    return (
+      <div className="min-h-screen px-4 pt-32 pb-24">
+        <div className="max-w-3xl mx-auto text-center">
+          <h1 className="text-3xl font-bold text-slate-100">
+            Article introuvable
+          </h1>
+          <p className="mt-4 text-slate-400">
+            Cet article n&apos;existe pas ou n&apos;est plus disponible.
+          </p>
+          <Link
+            to="/blog"
+            className="inline-flex px-5 py-2 mt-8 text-sm font-semibold text-black transition-colors rounded-full bg-cyan-400 hover:bg-cyan-300"
+          >
+            Retour au blog
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    // J'utilise le fond blanc de votre site
-    <div className="min-h-screen px-4 pt-32 pb-24 mx-auto bg-white sm:px-6 lg:px-8 max-w-7xl">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
+    <div className="min-h-screen px-4 pt-32 pb-24">
+      <motion.article
+        initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-16 text-center"
+        transition={{ duration: 0.4 }}
+        className="max-w-4xl mx-auto"
       >
-        <span className="inline-block py-1 px-3 rounded-full bg-[#F2F2F0] border border-[#2A95BF]/20 text-[#2A95BF] text-sm font-bold mb-6 tracking-wide">
-          Actualités & Découvertes
-        </span>
-        <h1 className="text-4xl md:text-6xl font-extrabold text-[#3C41A6] mb-6 tracking-tight">
-          Notre{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2A95BF] to-[#3C41A6]">
-            Blog
-          </span>
+        <Link
+          to="/blog"
+          className="inline-flex mb-8 text-sm font-semibold text-cyan-400 hover:text-cyan-300"
+        >
+          ← Retour au blog
+        </Link>
+
+        <h1 className="text-4xl font-extrabold leading-tight text-slate-100 md:text-5xl">
+          {post.title}
         </h1>
-        <p className="max-w-2xl mx-auto text-lg text-slate-500">
-          Retrouvez nos derniers articles, nos expertises en cybersécurité et
-          nos conseils d'architecture réseau.
-        </p>
-      </motion.div>
+        <p className="mt-5 leading-relaxed text-slate-400">{post.description}</p>
 
-      {loading ? (
-        <div className="text-center text-[#2A95BF] text-xl font-bold animate-pulse">
-          Chargement des articles... ⏳
+        <div className="flex flex-wrap gap-3 mt-6 text-sm text-slate-500">
+          <span>{post.category}</span>
+          <span>·</span>
+          <span>{formatDate(post.date)}</span>
+          <span>·</span>
+          <span>{post.readingTime} min de lecture</span>
         </div>
-      ) : posts.length === 0 ? (
-        <div className="text-center text-slate-500 text-lg bg-[#F2F2F0] py-12 rounded-3xl">
-          Aucun article pour le moment. Allez en écrire un sur Notion !
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post, index) => {
-            // Extraction du titre de l'article depuis Notion
-            const titre =
-              post.properties.Name?.title?.[0]?.plain_text ||
-              "Article sans titre";
-            const date = new Date(post.created_time).toLocaleDateString(
-              "fr-FR"
-            );
 
-            return (
-              <motion.div
-                key={post.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -5 }}
-                className="bg-white rounded-3xl p-8 border border-[#F2F2F0] shadow-lg hover:shadow-xl transition-all duration-300 group"
-              >
-                <div className="text-xs font-bold text-[#2A95BF] mb-4 uppercase tracking-wider bg-[#2A95BF]/10 inline-block px-3 py-1 rounded-full">
-                  {date}
-                </div>
-                <h2 className="text-2xl font-bold text-[#35428C] mb-6 group-hover:text-[#2A95BF] transition-colors">
-                  {titre}
-                </h2>
-                <button className="text-[#35428C] group-hover:text-[#2A95BF] font-bold transition-colors flex items-center gap-2">
-                  Lire l'article →
-                </button>
-              </motion.div>
-            );
-          })}
-        </div>
-      )}
+        <div className="mt-12">{post.content}</div>
+        {post.footer}
+      </motion.article>
     </div>
   );
 };

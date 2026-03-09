@@ -88,3 +88,20 @@ Tracked events:
 - `section_view` when a section is seen in viewport
 - `cta_click` on main CTA buttons
 - `form_submit` and `form_submit_error` for contact/audit forms
+
+## Email des formulaires (Audit / Contact / Devis VoIP)
+
+Tous les formulaires envoient maintenant vers l'API locale `/api/form-submit`, qui transmet les demandes a `brahim@assilel-tech.net`.
+
+Variables serveur a configurer (Vercel Project Settings -> Environment Variables):
+
+- `RESEND_API_KEY` (obligatoire)
+- `FORM_FROM_EMAIL` (optionnel, ex: `Assilel Tech <noreply@assilel-tech.net>`)
+
+Optionnel cote front:
+
+- `VITE_AUDIT_FORM_ENDPOINT`
+- `VITE_CONTACT_FORM_ENDPOINT`
+- `VITE_VOIP_QUOTE_FORM_ENDPOINT`
+
+Si ces 3 variables ne sont pas definies, le front utilise automatiquement `/api/form-submit`.

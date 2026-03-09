@@ -64,7 +64,8 @@ export const Contact = () => {
     try {
       const submitMode = await submitForm(
         import.meta.env.VITE_CONTACT_FORM_ENDPOINT,
-        formData
+        formData,
+        { formName: "contact" }
       );
       trackEvent("form_submit", {
         form_name: "contact",

@@ -35,7 +35,7 @@ export const VoipQuoteForm = () => {
       const mode = await submitForm(
         import.meta.env.VITE_VOIP_QUOTE_FORM_ENDPOINT,
         formData,
-        { allowLocalFallback: false }
+        { allowLocalFallback: false, formName: "voip_devis" }
       );
       trackEvent("form_submit", { form_name: "voip_devis", submit_mode: mode });
       setIsSubmitted(true);
