@@ -51,9 +51,12 @@ export const Footer = () => (
           <h4 className="mb-6 text-lg font-bold text-slate-200">Légal</h4>
           <ul className="space-y-3 text-slate-400">
             <li>
-              <a href="#" className="transition-colors hover:text-blue-300">
-                Mentions Légales
-              </a>
+              <Link
+                to="/conditions-utilisation"
+                className="transition-colors hover:text-blue-300"
+              >
+                Conditions d&apos;utilisation
+              </Link>
             </li>
             <li>
               <Link

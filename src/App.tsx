@@ -19,6 +19,7 @@ import { BlogIndexPage as BlogListPage } from "./pages/BlogIndexPage";
 import { BlogPostPage } from "./pages/BlogPostPage";
 import { ContactPage } from "./pages/ContactPage";
 import { PrivacyPolicyPage } from "./pages/PrivacyPolicyPage";
+import { TermsOfUsePage } from "./pages/TermsOfUsePage";
 
 function App() {
   const [isLoading, setIsLoading] = useState(() => {
@@ -116,6 +117,10 @@ function App() {
             <Route
               path="politique-confidentialite"
               element={<PrivacyPolicyPage />}
+            />
+            <Route
+              path="conditions-utilisation"
+              element={<TermsOfUsePage />}
             />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
