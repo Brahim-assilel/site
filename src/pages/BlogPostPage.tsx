@@ -1,64 +1,91 @@
-import { Link, useParams } from "react-router-dom";
-// On réimporte les données statiques depuis notre nouveau fichier
-import { getPostBySlug, blogPosts } from "../data/blog";
-import { NotFoundPage } from "./NotFoundPage";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
-export const BlogPostPage = () => {
-  const { slug } = useParams<{ slug: string }>();
-  // On revient à la récupération synchrone des données
-  const post = slug ? getPostBySlug(slug) : undefined;
+export const BlogListPage = () => {
+  const [posts, setPosts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  if (!post) {
-    return <NotFoundPage />;
-  }
-
-  // On recalcule les articles similaires de manière statique
-  const relatedPosts = blogPosts
-    .filter(
-      (p) => p.slug !== post.slug && p.category === post.category
-    )
-    .slice(0, 2);
+  useEffect(() => {
+    // On appelle notre pont Vercel
+    fetch("/api/posts")
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setPosts(data);
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Erreur de fetch :", err);
+        setLoading(false);
+      });
+  }, []);
 
   return (
-    <div className="px-4 py-28 mx-auto max-w-4xl sm:px-6 lg:px-8">
-      <article>
-        <header className="mb-12">
-          <p className="text-sm text-slate-400">
-            <Link to="/blog" className="hover:text-cyan-300">
-              Blog
-            </Link>{" "}
-            / {post.category}
-          </p>
-          <h1 className="mt-4 text-4xl font-extrabold text-slate-100 md:text-5xl">
-            {post.title}
-          </h1>
-          <p className="mt-6 text-lg text-slate-300">{post.description}</p>
-        </header>
+    // J'utilise le fond blanc de votre site
+    <div className="min-h-screen px-4 pt-32 pb-24 mx-auto bg-white sm:px-6 lg:px-8 max-w-7xl">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="mb-16 text-center"
+      >
+        <span className="inline-block py-1 px-3 rounded-full bg-[#F2F2F0] border border-[#2A95BF]/20 text-[#2A95BF] text-sm font-bold mb-6 tracking-wide">
+          Actualités & Découvertes
+        </span>
+        <h1 className="text-4xl md:text-6xl font-extrabold text-[#3C41A6] mb-6 tracking-tight">
+          Notre{" "}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2A95BF] to-[#3C41A6]">
+            Blog
+          </span>
+        </h1>
+        <p className="max-w-2xl mx-auto text-lg text-slate-500">
+          Retrouvez nos derniers articles, nos expertises en cybersécurité et
+          nos conseils d'architecture réseau.
+        </p>
+      </motion.div>
 
-        {/* On revient à l'affichage du contenu JSX */}
-        {post.content}
-        {post.footer}
+      {loading ? (
+        <div className="text-center text-[#2A95BF] text-xl font-bold animate-pulse">
+          Chargement des articles... ⏳
+        </div>
+      ) : posts.length === 0 ? (
+        <div className="text-center text-slate-500 text-lg bg-[#F2F2F0] py-12 rounded-3xl">
+          Aucun article pour le moment. Allez en écrire un sur Notion !
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {posts.map((post, index) => {
+            // Extraction du titre de l'article depuis Notion
+            const titre =
+              post.properties.Name?.title?.[0]?.plain_text ||
+              "Article sans titre";
+            const date = new Date(post.created_time).toLocaleDateString(
+              "fr-FR"
+            );
 
-        {relatedPosts.length > 0 && (
-          <section className="mt-16">
-            <h2 className="text-2xl font-bold text-slate-100">
-              Autres articles
-            </h2>
-            <div className="grid grid-cols-1 gap-6 mt-6 md:grid-cols-2">
-              {relatedPosts.map((relatedPost) => (
-                <Link
-                  key={relatedPost.slug}
-                  to={`/blog/${relatedPost.slug}`}
-                  className="block p-5 border rounded-2xl bg-slate-900/40 border-white/10 hover:bg-slate-900/70 transition-colors"
-                >
-                  <h3 className="font-bold text-slate-100">{relatedPost.title}</h3>
-                  <p className="mt-2 text-sm text-slate-300">{relatedPost.description}</p>
-                </Link>
-              ))}
-            </div>
-          </section>
-        )}
-      </article>
+            return (
+              <motion.div
+                key={post.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ y: -5 }}
+                className="bg-white rounded-3xl p-8 border border-[#F2F2F0] shadow-lg hover:shadow-xl transition-all duration-300 group"
+              >
+                <div className="text-xs font-bold text-[#2A95BF] mb-4 uppercase tracking-wider bg-[#2A95BF]/10 inline-block px-3 py-1 rounded-full">
+                  {date}
+                </div>
+                <h2 className="text-2xl font-bold text-[#35428C] mb-6 group-hover:text-[#2A95BF] transition-colors">
+                  {titre}
+                </h2>
+                <button className="text-[#35428C] group-hover:text-[#2A95BF] font-bold transition-colors flex items-center gap-2">
+                  Lire l'article →
+                </button>
+              </motion.div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };
