@@ -18,6 +18,7 @@ import { ServiceDetailPage } from "./pages/ServiceDetailPage";
 import { BlogIndexPage as BlogListPage } from "./pages/BlogIndexPage";
 import { BlogPostPage } from "./pages/BlogPostPage";
 import { ContactPage } from "./pages/ContactPage";
+import { PrivacyPolicyPage } from "./pages/PrivacyPolicyPage";
 
 function App() {
   const [isLoading, setIsLoading] = useState(() => {
@@ -112,6 +113,10 @@ function App() {
             <Route path="blog" element={<BlogListPage />} />
             <Route path="blog/:slug" element={<BlogPostPage />} />
             <Route path="contact" element={<ContactPage />} />
+            <Route
+              path="politique-confidentialite"
+              element={<PrivacyPolicyPage />}
+            />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>
