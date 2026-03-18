@@ -16,93 +16,95 @@ export type BlogPost = {
 export const blogPosts: BlogPost[] = [
   {
     slug: "dhis2-lenteur-tchad",
-    title: "DHIS2 au Tchad : Pourquoi est-il si lent et comment y remédier ?",
+    title:
+      "DHIS2 au Tchad : Pourquoi le déploiement est-il si lent et comment y remédier ?",
     description:
-      "Analyse des causes de la lenteur de DHIS2 au Tchad et présentation de solutions concrètes pour optimiser ses performances et garantir sa pérennité.",
-    image:
-      "https://ehealth4everyone.com/wp-content/uploads/2022/10/dhis-2-blog-post-Facebook-Cover.png",
+      "Analyse des causes du déploiement lent de DHIS2 au Tchad et solutions concrètes pour accélérer l'adoption, stabiliser la plateforme et améliorer les performances.",
+    image: "/DHIS2 logo.svg",
     category: "Systèmes d'Information",
     date: "2024-08-20",
-    readingTime: 3,
+    readingTime: 4,
     content: (
       <div className="space-y-12 text-slate-300">
         <section className="p-6 border rounded-2xl bg-red-950/30 border-red-400/20">
           <p className="text-lg leading-relaxed">
-            Le DHIS2 est un outil formidable pour la gestion des données
-            sanitaires, mais au Tchad, son utilisation est souvent freinée par
-            une <strong className="text-slate-100">lenteur exaspérante</strong>.
-            Cette latence n'est pas une fatalité inhérente au logiciel, mais la
-            conséquence de facteurs locaux spécifiques. Analysons les causes et,
-            surtout, les solutions pour y remédier.
+            Le DHIS2 est un outil stratégique pour le système d'information
+            sanitaire, mais au Tchad, son <strong className="text-slate-100">déploiement reste lent</strong> :
+            certaines zones avancent vite, d'autres prennent du retard, et la
+            qualité d'usage est inégale. Le problème ne vient pas uniquement du
+            logiciel, mais d'un ensemble de contraintes organisationnelles,
+            techniques et opérationnelles. Voici les causes majeures et les
+            solutions les plus efficaces.
           </p>
         </section>
 
         <section>
           <h2 className="mb-4 text-2xl font-bold text-cyan-300">
-            1. Les causes multifactorielles de la lenteur
+            1. Pourquoi le déploiement ralentit sur le terrain
           </h2>
           <p>
-            La performance de DHIS2 est un équilibre entre le serveur, le réseau
-            et la configuration de l'instance. Au Tchad, plusieurs de ces
-            piliers sont fragilisés.
+            Le succès de DHIS2 dépend d'une chaîne complète : gouvernance,
+            connectivité, infrastructure, formation et maintenance. Quand un
+            maillon est faible, tout le déploiement ralentit.
           </p>
           <ul className="mt-4 space-y-3 list-disc list-inside">
             <li>
-              <strong>Infrastructure réseau et connectivité :</strong> La faible
-              bande passante, la latence élevée et les coupures fréquentes,
-              surtout en zone rurale, impactent directement le chargement des
-              formulaires, rapports et tableaux de bord.
+              <strong>Gouvernance et pilotage fragmentés :</strong> absence
+              d'une roadmap claire, rôles mal définis entre niveau central et
+              périphérique, suivi irrégulier des indicateurs de déploiement.
             </li>
             <li>
-              <strong>Hébergement et configuration serveur :</strong> Des
-              serveurs sous-dimensionnés (CPU, RAM, I/O disque) ou mal
-              configurés (base de données, serveur web) sont une cause majeure
-              de goulots d'étranglement.
+              <strong>Connectivité hétérogène :</strong> bande passante faible,
+              latence élevée et coupures fréquentes, surtout hors des grandes
+              villes.
             </li>
             <li>
-              <strong>Volume de données et complexité :</strong> Une base de
-              données qui grossit sans optimisation, un modèle de données trop
-              complexe et des tableaux de bord lourds ralentissent
-              considérablement les requêtes.
+              <strong>Infrastructure technique sous-dimensionnée :</strong>
+              serveurs insuffisants, base de données mal optimisée, montée en
+              charge non anticipée.
             </li>
             <li>
-              <strong>Manque de maintenance :</strong> L'absence de nettoyage
-              régulier de la base de données (vacuum), de mise à jour des tables
-              analytiques et l'utilisation de versions DHIS2 obsolètes aggravent
-              la situation.
+              <strong>Conduite du changement limitée :</strong> formation
+              initiale trop courte, support local insuffisant, faible
+              appropriation par certains utilisateurs.
+            </li>
+            <li>
+              <strong>Maintenance irrégulière :</strong> tables analytiques non
+              mises à jour, base non nettoyée, versions obsolètes maintenues
+              trop longtemps.
             </li>
           </ul>
         </section>
 
         <section>
           <h2 className="mb-4 text-2xl font-bold text-cyan-300">
-            2. Solutions concrètes pour une performance retrouvée
+            2. Solutions concrètes pour accélérer le déploiement
           </h2>
           <p>
-            Il est possible d'améliorer drastiquement la situation en agissant
-            sur plusieurs leviers.
+            L'amélioration durable passe par une approche combinée : gouvernance
+            claire, socle technique robuste et accompagnement des équipes.
           </p>
           <div className="grid grid-cols-1 gap-4 mt-5 md:grid-cols-2">
             {[
               {
-                titre: "Optimiser l'hébergement",
+                titre: "Planifier un déploiement par phases",
                 texte:
-                  "Migrer vers un serveur dédié et correctement dimensionné est la première étape. Un audit de la configuration (PostgreSQL, Tomcat) permet de régler les paramètres critiques (mémoire, connexions) pour des performances optimales.",
+                  "Démarrer par un pilote sur quelques districts, capitaliser les retours, puis généraliser progressivement réduit les risques et améliore la qualité de mise en oeuvre.",
               },
               {
-                titre: "Mettre en place un cache performant",
+                titre: "Renforcer l'architecture technique",
                 texte:
-                  "L'utilisation d'un cache comme Varnish ou Nginx en frontal permet de servir instantanément les éléments statiques et les requêtes fréquentes, réduisant la charge sur le serveur DHIS2 et accélérant la navigation pour l'utilisateur.",
+                  "Un serveur correctement dimensionné, une base PostgreSQL optimisée et un frontal cache (Nginx/Varnish) améliorent fortement la stabilité et la vitesse d'utilisation.",
               },
               {
-                titre: "Automatiser la maintenance",
+                titre: "Industrialiser la maintenance",
                 texte:
-                  "Configurer des tâches planifiées (cron jobs) pour la mise à jour nocturne des tables analytiques, le nettoyage de la base de données et la surveillance des ressources est indispensable pour une performance durable.",
+                  "Automatiser les jobs critiques (tables analytiques, nettoyage base, supervision) évite la dégradation progressive et limite les interruptions de service.",
               },
               {
-                titre: "Mettre à jour DHIS2",
+                titre: "Investir dans l'adoption terrain",
                 texte:
-                  "Les nouvelles versions de DHIS2 apportent des améliorations de performance significatives. Planifier une montée de version permet de bénéficier de ces optimisations et des derniers correctifs de sécurité.",
+                  "Former des référents régionaux, proposer du coaching continu et clarifier les procédures d'escalade accélèrent l'appropriation et réduisent les blocages opérationnels.",
               },
             ].map((item) => (
               <div
@@ -118,14 +120,38 @@ export const blogPosts: BlogPost[] = [
           </div>
         </section>
 
+        <section>
+          <h2 className="mb-4 text-2xl font-bold text-cyan-300">
+            3. Feuille de route recommandée pour le Tchad
+          </h2>
+          <ol className="space-y-3 list-decimal list-inside">
+            <li>
+              <strong>Diagnostic national initial :</strong> cartographie des
+              sites, de la connectivité, des compétences et des points de
+              friction.
+            </li>
+            <li>
+              <strong>Pilote opérationnel :</strong> tester la méthodologie de
+              déploiement sur un périmètre limité et ajuster rapidement.
+            </li>
+            <li>
+              <strong>Extension progressive :</strong> déployer par vagues avec
+              jalons, indicateurs et redevabilité à chaque étape.
+            </li>
+            <li>
+              <strong>Institutionnalisation :</strong> support permanent,
+              maintenance planifiée et montée de version régulière.
+            </li>
+          </ol>
+        </section>
+
         <section className="p-6 border rounded-2xl bg-slate-800/40 border-white/10">
           <h2 className="mb-3 text-2xl font-bold text-cyan-300">Conclusion</h2>
           <p className="leading-relaxed">
-            La lenteur de DHIS2 au Tchad n'est pas une fatalité. Une approche
-            méthodique, combinant optimisation de l'infrastructure,
-            configuration logicielle adéquate et maintenance rigoureuse, peut
-            transformer l'expérience utilisateur et redonner à cet outil
-            essentiel toute son efficacité.
+            Le déploiement lent de DHIS2 au Tchad n'est pas une fatalité. Avec
+            une gouvernance ferme, une architecture technique bien dimensionnée
+            et un accompagnement terrain continu, DHIS2 peut devenir un outil
+            fiable, rapide et durable pour le pilotage sanitaire.
           </p>
         </section>
       </div>
@@ -133,11 +159,11 @@ export const blogPosts: BlogPost[] = [
     footer: (
       <footer className="p-8 mt-16 text-center border rounded-3xl bg-slate-900/50 border-white/10">
         <h2 className="text-2xl font-bold text-slate-100">
-          Votre instance DHIS2 est lente ?
+          Votre déploiement DHIS2 est en retard ?
         </h2>
         <p className="mt-3 text-slate-300">
-          Contactez nos experts pour un diagnostic de performance et un plan
-          d'action sur mesure pour revitaliser votre système.
+          Contactez nos experts pour structurer un plan de déploiement réaliste,
+          améliorer les performances et renforcer l'adoption terrain.
         </p>
         <div className="mt-6">
           <Button href="/#audit" variant="primary">

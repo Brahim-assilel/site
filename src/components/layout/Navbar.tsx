@@ -33,9 +33,6 @@ export const Navbar = () => {
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
   const desktopMenuRef = useRef<HTMLDivElement>(null);
-  const servicesCloseTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
-    null
-  );
   const voipCloseTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
     null
   );
@@ -112,19 +109,6 @@ export const Navbar = () => {
     });
   };
 
-  const openServicesMenu = () => {
-    clearCloseTimeout(servicesCloseTimeoutRef);
-    setIsServicesOpen(true);
-    setIsVoipOpen(false);
-  };
-
-  const scheduleCloseServicesMenu = () => {
-    clearCloseTimeout(servicesCloseTimeoutRef);
-    servicesCloseTimeoutRef.current = setTimeout(() => {
-      setIsServicesOpen(false);
-    }, HOVER_CLOSE_DELAY);
-  };
-
   const openVoipMenu = () => {
     clearCloseTimeout(voipCloseTimeoutRef);
     setIsVoipOpen(true);
@@ -140,7 +124,6 @@ export const Navbar = () => {
 
   useEffect(() => {
     return () => {
-      clearCloseTimeout(servicesCloseTimeoutRef);
       clearCloseTimeout(voipCloseTimeoutRef);
     };
   }, []);
@@ -208,22 +191,13 @@ export const Navbar = () => {
             Accueil
             <span className="absolute bottom-1.5 left-0 w-full h-0.5 bg-cyan-400 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out" />
           </Link>
-          <div
-            className="relative"
-            onMouseEnter={() => {
-              preloadCriticalRoutes();
-              openServicesMenu();
-            }}
-            onMouseLeave={scheduleCloseServicesMenu}
-          >
+          <div className="relative">
             <button
               type="button"
               onClick={() => {
-                if (isServicesOpen) {
-                  setIsServicesOpen(false);
-                } else {
-                  openServicesMenu();
-                }
+                preloadCriticalRoutes();
+                setIsServicesOpen((prev) => !prev);
+                setIsVoipOpen(false);
               }}
               className="relative inline-flex items-center gap-1.5 px-2.5 lg:px-3 py-2 text-xs lg:text-sm font-semibold text-cyan-200 transition-all duration-300 hover:text-cyan-100"
               aria-expanded={isServicesOpen}
@@ -245,8 +219,6 @@ export const Navbar = () => {
                   exit={{ opacity: 0, y: -6, scale: 0.98 }}
                   transition={{ duration: 0.16, ease: "easeOut" }}
                   className="absolute left-0 z-50 pt-2 top-full"
-                  onMouseEnter={openServicesMenu}
-                  onMouseLeave={scheduleCloseServicesMenu}
                 >
                   <div
                     id="services-menu"
