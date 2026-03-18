@@ -1,4 +1,4 @@
-import type { BlogPostWriteInput } from "./blog-db";
+import type { BlogPostWriteInput } from "./blog-db.js";
 
 const safeString = (value: unknown) =>
   typeof value === "string" ? value.trim() : "";

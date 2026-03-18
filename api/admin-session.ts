@@ -4,7 +4,7 @@ import {
   isAdminIpAllowed,
   resolveAdminConfig,
   verifyAdminSessionToken,
-} from "./admin-auth";
+} from "./admin-auth.js";
 
 type ApiRequest = {
   method?: string;

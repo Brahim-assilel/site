@@ -6,8 +6,8 @@ import {
   isValidAdminCredential,
   resolveAdminConfig,
   serializeSessionCookie,
-} from "./admin-auth";
-import { isAdminLoginRateLimitedPersistent } from "./admin-rate-limit";
+} from "./admin-auth.js";
+import { isAdminLoginRateLimitedPersistent } from "./admin-rate-limit.js";
 
 type ApiRequest = {
   method?: string;

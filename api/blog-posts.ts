@@ -1,4 +1,4 @@
-import { listPublishedBlogPosts } from "./blog-db";
+import { listPublishedBlogPosts } from "./blog-db.js";
 
 type ApiRequest = {
   method?: string;

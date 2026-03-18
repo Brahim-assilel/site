@@ -4,21 +4,21 @@ import {
   listAdminBlogPosts,
   setBlogPostPublished,
   updateBlogPost,
-} from "./blog-db";
+} from "./blog-db.js";
 import {
   isUniqueViolationError,
   parseApiBody,
   parseBlogPostId,
   parseBlogPostWriteInput,
   parsePublishToggleInput,
-} from "./blog-payload";
+} from "./blog-payload.js";
 import {
   getClientIp,
   getSessionTokenFromCookie,
   isAdminIpAllowed,
   resolveAdminConfig,
   verifyAdminSessionToken,
-} from "./admin-auth";
+} from "./admin-auth.js";
 
 type ApiRequest = {
   method?: string;

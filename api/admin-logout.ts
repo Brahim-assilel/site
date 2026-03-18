@@ -1,4 +1,4 @@
-import { isSecureRequest, serializeSessionClearCookie } from "./admin-auth";
+import { isSecureRequest, serializeSessionClearCookie } from "./admin-auth.js";
 
 type ApiRequest = {
   method?: string;
