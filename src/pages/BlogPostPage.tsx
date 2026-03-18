@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { usePublicBlogPosts } from "../lib/blogAdminStore";
+import { ArticleShareBar } from "../components/blog/ArticleShareBar";
 
 const formatDate = (dateStr: string) => {
   const date = new Date(dateStr);
@@ -72,6 +73,8 @@ export const BlogPostPage = () => {
           <span>·</span>
           <span>{post.readingTime} min de lecture</span>
         </div>
+
+        <ArticleShareBar title={post.title} slug={post.slug} />
 
         <div className="mt-12">{post.content}</div>
         {post.footer}
