@@ -5,6 +5,7 @@ export type BlogPost = {
   slug: string;
   title: string;
   description: string;
+  image?: string;
   category: string;
   date: string;
   readingTime: number; // in minutes
@@ -18,6 +19,8 @@ export const blogPosts: BlogPost[] = [
     title: "DHIS2 au Tchad : Pourquoi est-il si lent et comment y remédier ?",
     description:
       "Analyse des causes de la lenteur de DHIS2 au Tchad et présentation de solutions concrètes pour optimiser ses performances et garantir sa pérennité.",
+    image:
+      "https://ehealth4everyone.com/wp-content/uploads/2022/10/dhis-2-blog-post-Facebook-Cover.png",
     category: "Systèmes d'Information",
     date: "2024-08-20",
     readingTime: 3,

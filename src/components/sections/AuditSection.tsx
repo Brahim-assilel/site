@@ -10,6 +10,7 @@ export const AuditSection = () => {
     company: "",
     website: "",
     message: "",
+    __hp: "",
   });
   const [errors, setErrors] = useState({ name: "", email: "", company: "" });
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -51,7 +52,7 @@ export const AuditSection = () => {
     setIsSubmitting(true);
     try {
       const submitMode = await submitForm(
-        import.meta.env.VITE_AUDIT_FORM_ENDPOINT,
+        "/api/form-submit",
         formData,
         { formName: "audit" }
       );
@@ -109,6 +110,16 @@ export const AuditSection = () => {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
+              <input
+                type="text"
+                name="__hp"
+                value={formData.__hp}
+                onChange={handleChange}
+                tabIndex={-1}
+                autoComplete="off"
+                className="hidden"
+                aria-hidden="true"
+              />
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 <div>
                   <label className="block mb-2 text-sm font-bold text-slate-300">

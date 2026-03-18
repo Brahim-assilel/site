@@ -1,107 +1,57 @@
-# React + TypeScript + Vite
+# Assilel Tech
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Site principal en `Vite + React`, incluant les pages marketing, les services, la section VoIP et le blog local.
 
-Currently, two official plugins are available:
+## Scripts racine
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
-
-Note: This will impact Vite dev & build performances.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
+npm run build
+npm run lint
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- `npm run dev` : lance le site Vite en local
+- `npm run build` : génère le build de production
+- `npm run lint` : vérifie le code
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Blog
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Le blog est géré localement dans l'application Vite :
 
-## Analytics & Tracking
+- `/blog`
+- `/blog/:slug`
 
-This project supports GA4 event tracking.
+Sources principales :
 
-1. Copy `.env.example` to `.env`.
-2. Set `VITE_GA_MEASUREMENT_ID` with your GA4 Measurement ID.
-3. Optional: set `VITE_CONTACT_FORM_ENDPOINT` and `VITE_AUDIT_FORM_ENDPOINT` to enable remote form submission.
-4. Required for VoIP quote form: set `VITE_VOIP_QUOTE_FORM_ENDPOINT`.
+- `src/data/blog.tsx` : contenu des articles
+- `src/pages/BlogIndexPage.tsx` : listing
+- `src/pages/BlogPostPage.tsx` : détail
 
-Tracked events:
-- `page_view` on route/hash changes
-- `section_view` when a section is seen in viewport
-- `cta_click` on main CTA buttons
-- `form_submit` and `form_submit_error` for contact/audit forms
+## Formulaires
 
-## Email des formulaires (Audit / Contact / Devis VoIP)
+Les formulaires utilisent l'API locale `/api/form-submit`.
 
-Tous les formulaires envoient maintenant vers l'API locale `/api/form-submit`, qui transmet les demandes a `brahim@assilel-tech.net`.
+Variables serveur attendues :
 
-Variables serveur a configurer (Vercel Project Settings -> Environment Variables):
+- `RESEND_API_KEY`
+- `FORM_FROM_EMAIL`
 
-- `RESEND_API_KEY` (obligatoire)
-- `FORM_FROM_EMAIL` (optionnel, ex: `Assilel Tech <noreply@assilel-tech.net>`)
+## Admin sécurisé
 
-Optionnel cote front:
+Routes disponibles :
 
-- `VITE_AUDIT_FORM_ENDPOINT`
-- `VITE_CONTACT_FORM_ENDPOINT`
-- `VITE_VOIP_QUOTE_FORM_ENDPOINT`
+- `/admin/login`
+- `/admin`
 
-Si ces 3 variables ne sont pas definies, le front utilise automatiquement `/api/form-submit`.
+Variables serveur requises :
+
+- `ADMIN_EMAIL`
+- `ADMIN_PASSWORD`
+- `ADMIN_SESSION_SECRET`
+
+Publication d'articles (v1) :
+
+- Interface disponible sur `/admin`
+- Stockage persistant en base PostgreSQL (Neon)
+- Variables serveur nécessaires: `DATABASE_URL` (ou `POSTGRES_URL`)
+- Rate limit login admin persistant en base (fallback mémoire si DB indisponible)

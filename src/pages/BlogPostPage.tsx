@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { getPostBySlug } from "../data/blog";
+import { usePublicBlogPosts } from "../lib/blogAdminStore";
 
 const formatDate = (dateStr: string) => {
   const date = new Date(dateStr);
@@ -14,7 +14,8 @@ const formatDate = (dateStr: string) => {
 
 export const BlogPostPage = () => {
   const { slug } = useParams();
-  const post = slug ? getPostBySlug(slug) : undefined;
+  const posts = usePublicBlogPosts();
+  const post = slug ? posts.find((item) => item.slug === slug) : undefined;
 
   if (!post) {
     return (
@@ -56,6 +57,13 @@ export const BlogPostPage = () => {
           {post.title}
         </h1>
         <p className="mt-5 leading-relaxed text-slate-400">{post.description}</p>
+        {post.image ? (
+          <img
+            src={post.image}
+            alt={post.title}
+            className="object-cover w-full mt-8 border opacity-70 aspect-video rounded-2xl border-white/10"
+          />
+        ) : null}
 
         <div className="flex flex-wrap gap-3 mt-6 text-sm text-slate-500">
           <span>{post.category}</span>

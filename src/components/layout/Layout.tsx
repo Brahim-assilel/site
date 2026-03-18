@@ -6,6 +6,7 @@ import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
 import { ScrollToTopButton } from "../ui/ScrollToTopButton";
 import { FloatingQuoteButton } from "../ui/FloatingQuoteButton";
+import { FloatingWhatsAppButton } from "../ui/FloatingWhatsAppButton";
 import { trackPageView } from "../../lib/analytics";
 
 const ScrollToTop = () => {
@@ -53,6 +54,7 @@ export const Layout = () => {
         </motion.main>
       </AnimatePresence>
       <Footer />
+      <FloatingWhatsAppButton />
       <ScrollToTopButton />
       <FloatingQuoteButton />
       <Analytics />

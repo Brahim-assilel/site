@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Routes, Route } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { Layout } from "./components/layout/Layout";
 import { HomePage } from "./pages/HomePage";
 import { NotFoundPage } from "./pages/NotFoundPage";
@@ -15,11 +15,14 @@ import { SecuritePage } from "./pages/SecuritePage";
 import { SupportPage } from "./pages/SupportPage";
 import { DemoPage } from "./pages/DemoPage";
 import { ServiceDetailPage } from "./pages/ServiceDetailPage";
-import { BlogIndexPage as BlogListPage } from "./pages/BlogIndexPage";
+import { BlogIndexPage } from "./pages/BlogIndexPage";
 import { BlogPostPage } from "./pages/BlogPostPage";
 import { ContactPage } from "./pages/ContactPage";
 import { PrivacyPolicyPage } from "./pages/PrivacyPolicyPage";
 import { TermsOfUsePage } from "./pages/TermsOfUsePage";
+import { AdminLoginPage } from "./pages/AdminLoginPage";
+import { AdminDashboardPage } from "./pages/AdminDashboardPage";
+import { RequireAdminAuth } from "./components/auth/RequireAdminAuth";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -87,6 +90,15 @@ function App() {
       </AnimatePresence>
       {!isLoading && (
         <Routes>
+          <Route path="admin/login" element={<AdminLoginPage />} />
+          <Route
+            path="admin"
+            element={
+              <RequireAdminAuth>
+                <AdminDashboardPage />
+              </RequireAdminAuth>
+            }
+          />
           <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
             <Route path="voip" element={<VoipPage />} />
@@ -99,17 +111,14 @@ function App() {
             <Route path="support" element={<SupportPage />} />
             <Route path="demo" element={<DemoPage />} />
             <Route path="services/:slug" element={<ServiceDetailPage />} />
-            <Route path="blog" element={<BlogListPage />} />
+            <Route path="blog" element={<BlogIndexPage />} />
             <Route path="blog/:slug" element={<BlogPostPage />} />
             <Route path="contact" element={<ContactPage />} />
             <Route
               path="politique-confidentialite"
               element={<PrivacyPolicyPage />}
             />
-            <Route
-              path="conditions-utilisation"
-              element={<TermsOfUsePage />}
-            />
+            <Route path="conditions-utilisation" element={<TermsOfUsePage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { blogPosts } from "../data/blog";
+import { usePublicBlogPosts } from "../lib/blogAdminStore";
 
 const categoryColors: Record<string, string> = {
   Téléphonie: "bg-cyan-400/10 text-cyan-300 border border-cyan-400/30",
@@ -26,6 +26,7 @@ const formatDate = (dateStr: string) => {
 };
 
 export const BlogIndexPage = () => {
+  const blogPosts = usePublicBlogPosts();
   const [featured, ...rest] = blogPosts;
 
   return (
@@ -47,9 +48,16 @@ export const BlogIndexPage = () => {
       </section>
 
       <div className="max-w-6xl px-4 mx-auto pb-28">
-        {featured && (
+        {featured ? (
           <Link to={`/blog/${featured.slug}`}>
             <div className="p-8 mb-10 border rounded-3xl bg-slate-900 border-white/10">
+              {featured.image ? (
+                <img
+                  src={featured.image}
+                  alt={featured.title}
+                  className="object-cover w-full mb-6 border opacity-70 aspect-video rounded-2xl border-white/10"
+                />
+              ) : null}
               <span className={getCategoryStyle(featured.category)}>
                 {featured.category}
               </span>
@@ -62,6 +70,15 @@ export const BlogIndexPage = () => {
               </div>
             </div>
           </Link>
+        ) : (
+          <div className="p-8 mb-10 text-center border rounded-3xl bg-slate-900 border-white/10">
+            <h2 className="text-2xl font-bold text-slate-100">
+              Aucun article publié
+            </h2>
+            <p className="mt-3 text-slate-400">
+              Utilisez l&apos;interface admin pour publier votre premier article.
+            </p>
+          </div>
         )}
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -85,9 +102,7 @@ export const BlogIndexPage = () => {
           ))}
         </div>
 
-        <div className="mt-10 text-sm text-slate-500">
-          {blogPosts.length} articles
-        </div>
+        <div className="mt-10 text-sm text-slate-500">{blogPosts.length} articles</div>
       </div>
     </div>
   );

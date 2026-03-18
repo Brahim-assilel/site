@@ -16,6 +16,17 @@ import { services } from "../../data/services";
 const HOVER_CLOSE_DELAY = 120;
 
 export const Navbar = () => {
+  const mobileNavItems = [
+    { label: "Accueil", href: "/#accueil" },
+    { label: "Nos Valeurs", href: "/#nos-valeurs" },
+    { label: "VoIP", href: "/voip" },
+    { label: "Tarifs", href: "/tarifs" },
+    { label: "Démo / Contact", href: "/demo" },
+    { label: "Contact", href: "/contact" },
+    { label: "FAQ", href: "/#faq" },
+    { label: "Blog", href: "/blog" },
+    { label: "À propos", href: "/#a-propos" },
+  ] as const;
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVoipOpen, setIsVoipOpen] = useState(false);
@@ -358,7 +369,6 @@ export const Navbar = () => {
           </Link>
           <Link
             to="/blog"
-            onMouseEnter={() => preloadRoute("/blog")}
             className="relative px-2.5 lg:px-3 py-2 text-xs lg:text-sm font-medium text-gray-300 transition-all duration-300 rounded-full group hover:text-cyan-300 hover:text-shadow-[0_0_12px_rgba(0,246,255,1)]"
           >
             Blog
@@ -417,17 +427,7 @@ export const Navbar = () => {
               className="absolute w-full p-4 mt-2 overflow-hidden border bg-slate-900/90 backdrop-blur-lg border-white/10 rounded-3xl md:hidden top-full"
             >
               <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                {[
-                  { label: "Accueil", href: "/#accueil" },
-                  { label: "Nos Valeurs", href: "/#nos-valeurs" },
-                  { label: "VoIP", href: "/voip" },
-                  { label: "Tarifs", href: "/tarifs" },
-                  { label: "Démo / Contact", href: "/demo" },
-                  { label: "Contact", href: "/contact" },
-                  { label: "FAQ", href: "/#faq" },
-                  { label: "Blog", href: "/blog" },
-                  { label: "À propos", href: "/#a-propos" },
-                ].map((item) => (
+                {mobileNavItems.map((item) => (
                   <Link
                     key={item.label}
                     to={item.href}

@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, MessageCircle, Facebook } from "lucide-react";
 import { Button } from "../ui/Button";
 import {
   CONTACT_ADDRESS,
   CONTACT_EMAIL,
+  CONTACT_FACEBOOK_URL,
   CONTACT_PHONE,
+  CONTACT_WHATSAPP,
+  CONTACT_WHATSAPP_URL,
 } from "../../config/brand";
 import { submitForm } from "../../lib/submitForm";
 import { trackEvent } from "../../lib/analytics";
@@ -15,6 +18,7 @@ export const Contact = () => {
     email: "",
     phone: "",
     message: "",
+    __hp: "",
   });
   const [errors, setErrors] = useState({
     name: "",
@@ -63,7 +67,7 @@ export const Contact = () => {
     setIsSubmitting(true);
     try {
       const submitMode = await submitForm(
-        import.meta.env.VITE_CONTACT_FORM_ENDPOINT,
+        "/api/form-submit",
         formData,
         { formName: "contact" }
       );
@@ -111,6 +115,40 @@ export const Contact = () => {
                 <Mail className="flex-shrink-0 w-6 h-6 text-blue-400" />
                 <p className="text-slate-400">{CONTACT_EMAIL}</p>
               </div>
+              <div className="flex gap-6">
+                <MessageCircle className="flex-shrink-0 w-6 h-6 text-green-400" />
+                <a
+                  href={CONTACT_WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors text-slate-400 hover:text-green-300"
+                  onClick={() =>
+                    trackEvent("cta_click", {
+                      cta_name: "contact_whatsapp",
+                      destination: CONTACT_WHATSAPP_URL,
+                    })
+                  }
+                >
+                  WhatsApp: {CONTACT_WHATSAPP}
+                </a>
+              </div>
+              <div className="flex gap-6">
+                <a
+                  href={CONTACT_FACEBOOK_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 font-medium transition-colors text-slate-300 hover:text-blue-300"
+                  onClick={() =>
+                    trackEvent("cta_click", {
+                      cta_name: "contact_facebook",
+                      destination: CONTACT_FACEBOOK_URL,
+                    })
+                  }
+                >
+                  <Facebook className="w-5 h-5" />
+                  <span>Page Facebook: AssilelTech</span>
+                </a>
+              </div>
             </div>
             {isSubmitted ? (
               <div className="p-8 mt-12 text-center border rounded-lg bg-green-900/50 border-green-500/50">
@@ -124,6 +162,16 @@ export const Contact = () => {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="mt-12">
+                <input
+                  type="text"
+                  name="__hp"
+                  value={formData.__hp}
+                  onChange={handleChange}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  className="hidden"
+                  aria-hidden="true"
+                />
                 <div className="grid grid-cols-1 gap-y-6 gap-x-8 sm:grid-cols-2">
                   <div className="sm:col-span-2">
                     <label className="block mb-2 text-sm font-bold text-slate-300">

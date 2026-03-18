@@ -30,7 +30,6 @@ export const Button = ({
   size = "md",
   className,
   href,
-  as,
   ...props
 }: ButtonProps) => {
   const baseClasses =

@@ -15,6 +15,7 @@ export const VoipQuoteForm = () => {
     company: "",
     email: "",
     phone: "",
+    __hp: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -33,7 +34,7 @@ export const VoipQuoteForm = () => {
     setIsSubmitting(true);
     try {
       const mode = await submitForm(
-        import.meta.env.VITE_VOIP_QUOTE_FORM_ENDPOINT,
+        "/api/form-submit",
         formData,
         { allowLocalFallback: false, formName: "voip_devis" }
       );
@@ -69,6 +70,16 @@ export const VoipQuoteForm = () => {
         canaux, numéros, options, volumes.
       </p>
       <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <input
+          type="text"
+          name="__hp"
+          value={formData.__hp}
+          onChange={handleChange}
+          tabIndex={-1}
+          autoComplete="off"
+          className="hidden"
+          aria-hidden="true"
+        />
         <label className="flex flex-col gap-2 text-sm text-slate-300">
           Je cherche
           <select

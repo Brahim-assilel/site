@@ -35,7 +35,17 @@ export const submitForm = async (
   });
 
   if (!response.ok) {
-    throw new Error("Impossible d'envoyer le formulaire pour le moment.");
+    const errorBody = await response.json().catch(() => null);
+    const baseMessage =
+      errorBody && typeof errorBody.error === "string"
+        ? errorBody.error
+        : "Impossible d'envoyer le formulaire pour le moment.";
+    const details =
+      errorBody && typeof errorBody.details === "string"
+        ? ` (${errorBody.details})`
+        : "";
+    const message = `${baseMessage}${details}`;
+    throw new Error(message);
   }
 
   return "remote";
