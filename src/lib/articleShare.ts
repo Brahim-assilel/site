@@ -7,16 +7,16 @@ export type ArticleShareLinks = {
 };
 
 const getSiteOrigin = () => {
+  if (typeof window !== "undefined" && window.location.origin) {
+    return window.location.origin.replace(/\/+$/, "");
+  }
+
   const envOrigin = import.meta.env.VITE_SITE_URL;
   if (typeof envOrigin === "string" && envOrigin.trim().length > 0) {
     return envOrigin.trim().replace(/\/+$/, "");
   }
 
-  if (typeof window !== "undefined") {
-    return window.location.origin;
-  }
-
-  return "";
+  return "https://assilel-tech.net";
 };
 
 export const getArticleUrl = (slug: string) => `${getSiteOrigin()}/blog/${slug}`;

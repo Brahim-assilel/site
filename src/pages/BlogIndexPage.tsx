@@ -54,15 +54,44 @@ const BlogCardShareActions = ({ title, slug }: BlogCardShareActionsProps) => {
     [shareLinks],
   );
 
-  const handleCopy = async () => {
-    if (typeof navigator === "undefined" || !navigator.clipboard) return;
+  const fallbackCopy = (value: string) => {
+    if (typeof document === "undefined") return false;
 
     try {
-      await navigator.clipboard.writeText(shareLinks.articleUrl);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 1800);
+      const textarea = document.createElement("textarea");
+      textarea.value = value;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.select();
+      const success = document.execCommand("copy");
+      document.body.removeChild(textarea);
+      return success;
     } catch {
-      setCopied(false);
+      return false;
+    }
+  };
+
+  const handleCopy = async () => {
+    let copiedSuccessfully = false;
+
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      try {
+        await navigator.clipboard.writeText(shareLinks.articleUrl);
+        copiedSuccessfully = true;
+      } catch {
+        copiedSuccessfully = false;
+      }
+    }
+
+    if (!copiedSuccessfully) {
+      copiedSuccessfully = fallbackCopy(shareLinks.articleUrl);
+    }
+
+    setCopied(copiedSuccessfully);
+    if (copiedSuccessfully) {
+      window.setTimeout(() => setCopied(false), 1800);
     }
   };
 
