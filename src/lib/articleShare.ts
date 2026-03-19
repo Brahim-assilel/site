@@ -1,5 +1,6 @@
 export type ArticleShareLinks = {
   articleUrl: string;
+  sharePreviewUrl: string;
   facebookUrl: string;
   xUrl: string;
   linkedinUrl: string;
@@ -20,21 +21,25 @@ const getSiteOrigin = () => {
 };
 
 export const getArticleUrl = (slug: string) => `${getSiteOrigin()}/blog/${slug}`;
+export const getArticleSharePreviewUrl = (slug: string) =>
+  `${getSiteOrigin()}/blog-share/${slug}`;
 
 export const getArticleShareLinks = (
   title: string,
   slug: string,
 ): ArticleShareLinks => {
   const articleUrl = getArticleUrl(slug);
+  const sharePreviewUrl = getArticleSharePreviewUrl(slug);
   const encodedTitle = encodeURIComponent(title);
-  const encodedUrl = encodeURIComponent(articleUrl);
-  const encodedWhatsappMessage = encodeURIComponent(`${title} ${articleUrl}`);
+  const encodedPreviewUrl = encodeURIComponent(sharePreviewUrl);
+  const encodedWhatsappMessage = encodeURIComponent(`${title} ${sharePreviewUrl}`);
 
   return {
     articleUrl,
-    facebookUrl: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
-    xUrl: `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`,
-    linkedinUrl: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
+    sharePreviewUrl,
+    facebookUrl: `https://www.facebook.com/sharer/sharer.php?u=${encodedPreviewUrl}`,
+    xUrl: `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedPreviewUrl}`,
+    linkedinUrl: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedPreviewUrl}`,
     whatsappUrl: `https://wa.me/?text=${encodedWhatsappMessage}`,
   };
 };
