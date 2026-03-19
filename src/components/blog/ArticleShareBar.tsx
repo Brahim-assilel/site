@@ -18,7 +18,7 @@ type ArticleShareBarProps = {
 
 type ShareTarget = {
   name: string;
-  href: string;
+  url: string;
   icon: ComponentType<{ className?: string }>;
 };
 
@@ -32,22 +32,22 @@ export const ArticleShareBar = ({ title, slug }: ArticleShareBarProps) => {
     () => [
       {
         name: "Facebook",
-        href: shareLinks.facebookUrl,
+        url: shareLinks.facebookUrl,
         icon: Facebook,
       },
       {
         name: "X",
-        href: shareLinks.xUrl,
+        url: shareLinks.xUrl,
         icon: Twitter,
       },
       {
         name: "LinkedIn",
-        href: shareLinks.linkedinUrl,
+        url: shareLinks.linkedinUrl,
         icon: Linkedin,
       },
       {
         name: "WhatsApp",
-        href: shareLinks.whatsappUrl,
+        url: shareLinks.whatsappUrl,
         icon: MessageCircle,
       },
     ],
@@ -119,30 +119,46 @@ export const ArticleShareBar = ({ title, slug }: ArticleShareBarProps) => {
     }
   };
 
+  const openShareUrl = (url: string) => {
+    if (typeof window === "undefined") return;
+
+    const popup = window.open(url, "_blank", "noopener,noreferrer");
+    if (!popup) {
+      window.location.href = url;
+    }
+  };
+
   return (
     <section className="p-5 mt-8 border rounded-2xl bg-slate-900/70 border-white/10">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <p className="text-sm font-semibold tracking-wide uppercase text-slate-300">
           Partager cet article
         </p>
-        <div className="flex flex-wrap gap-2">
-          {shareTargets.map(({ name, href, icon: Icon }) => (
-            <a
+        <div className="relative z-20 flex flex-wrap gap-2 pointer-events-auto">
+          {shareTargets.map(({ name, url, icon: Icon }) => (
+            <button
               key={name}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
+              type="button"
+              onClick={(event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                openShareUrl(url);
+              }}
               aria-label={`Partager sur ${name}`}
               className="inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold transition-colors border rounded-full bg-slate-800 text-slate-200 border-white/10 hover:border-cyan-400/40 hover:text-cyan-300"
             >
               <Icon className="w-4 h-4" />
               <span>{name}</span>
-            </a>
+            </button>
           ))}
 
           <button
             type="button"
-            onClick={handleCopyLink}
+            onClick={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              void handleCopyLink();
+            }}
             className="inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold transition-colors border rounded-full bg-slate-800 text-slate-200 border-white/10 hover:border-cyan-400/40 hover:text-cyan-300"
           >
             {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
@@ -152,7 +168,11 @@ export const ArticleShareBar = ({ title, slug }: ArticleShareBarProps) => {
           {canNativeShare ? (
             <button
               type="button"
-              onClick={handleNativeShare}
+              onClick={(event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                void handleNativeShare();
+              }}
               disabled={nativeSharing}
               className="inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold transition-colors border rounded-full bg-cyan-400/10 text-cyan-300 border-cyan-400/30 hover:bg-cyan-400/20 disabled:cursor-not-allowed disabled:opacity-70"
             >

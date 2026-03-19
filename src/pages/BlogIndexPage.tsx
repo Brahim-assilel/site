@@ -31,7 +31,7 @@ const formatDate = (dateStr: string) => {
 
 type CardShareAction = {
   name: string;
-  href: string;
+  url: string;
   icon: ComponentType<{ className?: string }>;
 };
 
@@ -46,10 +46,10 @@ const BlogCardShareActions = ({ title, slug }: BlogCardShareActionsProps) => {
 
   const actions = useMemo<CardShareAction[]>(
     () => [
-      { name: "Facebook", href: shareLinks.facebookUrl, icon: Facebook },
-      { name: "X", href: shareLinks.xUrl, icon: Twitter },
-      { name: "LinkedIn", href: shareLinks.linkedinUrl, icon: Linkedin },
-      { name: "WhatsApp", href: shareLinks.whatsappUrl, icon: MessageCircle },
+      { name: "Facebook", url: shareLinks.facebookUrl, icon: Facebook },
+      { name: "X", url: shareLinks.xUrl, icon: Twitter },
+      { name: "LinkedIn", url: shareLinks.linkedinUrl, icon: Linkedin },
+      { name: "WhatsApp", url: shareLinks.whatsappUrl, icon: MessageCircle },
     ],
     [shareLinks],
   );
@@ -95,27 +95,43 @@ const BlogCardShareActions = ({ title, slug }: BlogCardShareActionsProps) => {
     }
   };
 
+  const openShareUrl = (url: string) => {
+    if (typeof window === "undefined") return;
+
+    const popup = window.open(url, "_blank", "noopener,noreferrer");
+    if (!popup) {
+      window.location.href = url;
+    }
+  };
+
   return (
-    <div className="flex items-center justify-between pt-4 mt-5 border-t border-white/10">
+    <div className="relative z-20 flex items-center justify-between pt-4 mt-5 border-t border-white/10 pointer-events-auto">
       <span className="text-xs font-medium tracking-wide uppercase text-slate-500">
         Partager
       </span>
       <div className="flex items-center gap-2">
-        {actions.map(({ name, href, icon: Icon }) => (
-          <a
+        {actions.map(({ name, url, icon: Icon }) => (
+          <button
             key={name}
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
+            type="button"
+            onClick={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              openShareUrl(url);
+            }}
             aria-label={`Partager sur ${name}`}
             className="inline-flex items-center justify-center w-8 h-8 transition-colors border rounded-full bg-slate-800/80 border-white/10 text-slate-300 hover:border-cyan-400/40 hover:text-cyan-300"
           >
             <Icon className="w-4 h-4" />
-          </a>
+          </button>
         ))}
         <button
           type="button"
-          onClick={handleCopy}
+          onClick={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            void handleCopy();
+          }}
           aria-label={copied ? "Lien copié" : "Copier le lien"}
           className="inline-flex items-center justify-center w-8 h-8 transition-colors border rounded-full bg-slate-800/80 border-white/10 text-slate-300 hover:border-cyan-400/40 hover:text-cyan-300"
         >
