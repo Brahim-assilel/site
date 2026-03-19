@@ -20,9 +20,11 @@ const getSiteOrigin = () => {
   return "https://assilel-tech.net";
 };
 
+const SHARE_VERSION = "v3";
+
 export const getArticleUrl = (slug: string) => `${getSiteOrigin()}/blog/${slug}`;
 export const getArticleSharePreviewUrl = (slug: string) =>
-  `${getSiteOrigin()}/blog-share/${slug}`;
+  `${getSiteOrigin()}/blog-share/${slug}?sv=${SHARE_VERSION}`;
 
 export const getArticleShareLinks = (
   title: string,

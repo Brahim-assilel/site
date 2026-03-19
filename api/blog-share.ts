@@ -22,6 +22,7 @@ type ShareMeta = {
 
 const DEFAULT_SITE_URL = "https://assilel-tech.net";
 const DEFAULT_IMAGE_PATH = "/logo.png";
+const SHARE_VERSION = "v3";
 
 const safeText = (value: unknown, fallback: string) => {
   if (typeof value !== "string") return fallback;
@@ -97,11 +98,18 @@ const findMetaBySlug = async (slug: string): Promise<ShareMeta | null> => {
 
 const buildHtml = (meta: ShareMeta, baseUrl: string) => {
   const articleUrl = absoluteUrl(baseUrl, `/blog/${meta.slug}`);
-  const ogImage = absoluteUrl(baseUrl, meta.image || DEFAULT_IMAGE_PATH);
+  const rawImage = absoluteUrl(baseUrl, meta.image || DEFAULT_IMAGE_PATH);
+  const ogImage = rawImage.toLowerCase().endsWith(".svg")
+    ? `https://images.weserv.nl/?url=${encodeURIComponent(
+        rawImage.replace(/^https?:\/\//i, ""),
+      )}&output=png&w=1200&h=630&fit=contain&bg=111827`
+    : rawImage;
+  const ogUrl = absoluteUrl(baseUrl, `/blog-share/${meta.slug}?sv=${SHARE_VERSION}`);
   const title = escapeHtml(meta.title);
   const description = escapeHtml(meta.description);
   const safeArticleUrl = escapeHtml(articleUrl);
   const safeImageUrl = escapeHtml(ogImage);
+  const safeOgUrl = escapeHtml(ogUrl);
 
   return `<!doctype html>
 <html lang="fr">
@@ -114,7 +122,7 @@ const buildHtml = (meta: ShareMeta, baseUrl: string) => {
     <meta property="og:site_name" content="Assilel-Tech" />
     <meta property="og:title" content="${title}" />
     <meta property="og:description" content="${description}" />
-    <meta property="og:url" content="${safeArticleUrl}" />
+    <meta property="og:url" content="${safeOgUrl}" />
     <meta property="og:image" content="${safeImageUrl}" />
     <meta property="og:image:secure_url" content="${safeImageUrl}" />
     <meta property="og:image:alt" content="${title}" />
