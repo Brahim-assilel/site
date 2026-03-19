@@ -52,8 +52,12 @@ const getBaseUrl = (req: ApiRequest) => {
 };
 
 const absoluteUrl = (baseUrl: string, value: string) => {
-  if (/^https?:\/\//i.test(value)) return value;
-  return `${baseUrl}${value.startsWith("/") ? "" : "/"}${value}`;
+  try {
+    return new URL(value, `${baseUrl}/`).toString();
+  } catch {
+    if (/^https?:\/\//i.test(value)) return value;
+    return `${baseUrl}${value.startsWith("/") ? "" : "/"}${value}`;
+  }
 };
 
 const getSlugFromRequest = (req: ApiRequest) => {
@@ -147,7 +151,7 @@ const buildNotFoundHtml = (baseUrl: string) => {
 };
 
 export default async function handler(req: ApiRequest, res: ApiResponse) {
-  if (req.method !== "GET") {
+  if (req.method !== "GET" && req.method !== "HEAD") {
     res.setHeader("Content-Type", "text/plain; charset=utf-8");
     return res.status(405).send("Method Not Allowed");
   }
@@ -160,7 +164,14 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
   res.setHeader("Cache-Control", "public, s-maxage=600, stale-while-revalidate=86400");
 
   if (!meta) {
+    if (req.method === "HEAD") {
+      return res.status(404).send("");
+    }
     return res.status(404).send(buildNotFoundHtml(baseUrl));
+  }
+
+  if (req.method === "HEAD") {
+    return res.status(200).send("");
   }
 
   return res.status(200).send(buildHtml(meta, baseUrl));
