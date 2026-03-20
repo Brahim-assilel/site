@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { BRAND_NAME } from "../config/brand";
+import { BRAND_NAME } from "../../config/brand";
 
 type SeoProps = {
   title: string;

@@ -1,8 +1,8 @@
 import { Link, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { getPostBySlug } from "../data/blog";
-import { Seo } from "../components/Seo";
-import { NotFoundPage } from "./NotFoundPage";
+import { getPostBySlug } from "../../data/blog";
+import { Seo } from "../Seo";
+import { NotFoundPage } from "../../pages/NotFoundPage";
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);

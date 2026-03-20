@@ -153,6 +153,25 @@ const readBody = (req: IncomingMessage) =>
     req.on("end", () => resolve(body));
   });
 
+const SHARE_DEFAULT_DESCRIPTION =
+  "Solutions IT, téléphonie cloud et cybersécurité pour les entreprises.";
+
+const shareEscapeHtml = (value: string) =>
+  value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+const shareNormalizeSlug = (value: string) =>
+  value
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9-]/g, "")
+    .replace(/-{2,}/g, "-")
+    .replace(/^-+|-+$/g, "");
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
@@ -220,6 +239,69 @@ export default defineConfig({
 
         server.middlewares.use(async (req, res, next) => {
           const urlPath = req.url?.split("?")[0] || "";
+          if (urlPath === "/api/share") {
+            if (req.method !== "GET") {
+              res.statusCode = 405;
+              res.setHeader("Content-Type", "application/json");
+              res.end(JSON.stringify({ error: "Method Not Allowed" }));
+              return;
+            }
+
+            const host = getHeaderValue(req.headers.host) || "localhost:5173";
+            const origin = `http://${host}`;
+            const requestUrl = new URL(req.url || "/api/share", origin);
+            const slug = shareNormalizeSlug(requestUrl.searchParams.get("slug") || "");
+            const title =
+              (requestUrl.searchParams.get("title") || "Assilel Tech").trim() ||
+              "Assilel Tech";
+            const image = (requestUrl.searchParams.get("image") || "").trim();
+
+            const articleUrl = slug ? `${origin}/blog/${slug}` : `${origin}/blog`;
+            const imageUrl = image.startsWith("http")
+              ? image
+              : image.startsWith("/")
+                ? `${origin}${image}`
+                : `${origin}/cover.png`;
+
+            const html = `<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>${shareEscapeHtml(title)}</title>
+    <meta name="description" content="${shareEscapeHtml(
+      SHARE_DEFAULT_DESCRIPTION,
+    )}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="${shareEscapeHtml(title)}" />
+    <meta property="og:description" content="${shareEscapeHtml(
+      SHARE_DEFAULT_DESCRIPTION,
+    )}" />
+    <meta property="og:url" content="${shareEscapeHtml(articleUrl)}" />
+    <meta property="og:image" content="${shareEscapeHtml(imageUrl)}" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="${shareEscapeHtml(title)}" />
+    <meta name="twitter:description" content="${shareEscapeHtml(
+      SHARE_DEFAULT_DESCRIPTION,
+    )}" />
+    <meta name="twitter:image" content="${shareEscapeHtml(imageUrl)}" />
+    <meta http-equiv="refresh" content="0; url=${shareEscapeHtml(articleUrl)}" />
+    <link rel="canonical" href="${shareEscapeHtml(articleUrl)}" />
+  </head>
+  <body>
+    <p>Redirection vers l'article… <a href="${shareEscapeHtml(
+      articleUrl,
+    )}">Continuer</a></p>
+    <script>window.location.replace(${JSON.stringify(articleUrl)});</script>
+  </body>
+</html>`;
+
+            res.statusCode = 200;
+            res.setHeader("Content-Type", "text/html; charset=utf-8");
+            res.setHeader("Cache-Control", "public, max-age=300");
+            res.end(html);
+            return;
+          }
 
           if (urlPath === "/api/admin-session") {
             if (req.method !== "GET") {

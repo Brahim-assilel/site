@@ -1,6 +1,6 @@
 export type ArticleShareLinks = {
   articleUrl: string;
-  sharePreviewUrl: string;
+  shareLandingUrl: string;
   facebookUrl: string;
   xUrl: string;
   linkedinUrl: string;
@@ -20,28 +20,28 @@ const getSiteOrigin = () => {
   return "https://assilel-tech.net";
 };
 
-const SHARE_VERSION = "v3";
-
 export const getArticleUrl = (slug: string) => `${getSiteOrigin()}/blog/${slug}`;
-export const getArticleSharePreviewUrl = (slug: string) =>
-  `${getSiteOrigin()}/blog-share/${slug}?sv=${SHARE_VERSION}`;
+export const getArticleShareLandingUrl = (title: string, slug: string) =>
+  `${getSiteOrigin()}/api/share?slug=${encodeURIComponent(slug)}&title=${encodeURIComponent(
+    title,
+  )}`;
 
 export const getArticleShareLinks = (
   title: string,
   slug: string,
 ): ArticleShareLinks => {
   const articleUrl = getArticleUrl(slug);
-  const sharePreviewUrl = getArticleSharePreviewUrl(slug);
+  const shareLandingUrl = getArticleShareLandingUrl(title, slug);
   const encodedTitle = encodeURIComponent(title);
-  const encodedPreviewUrl = encodeURIComponent(sharePreviewUrl);
-  const encodedWhatsappMessage = encodeURIComponent(`${title} ${sharePreviewUrl}`);
+  const encodedLandingUrl = encodeURIComponent(shareLandingUrl);
+  const encodedWhatsappMessage = encodeURIComponent(`${title} ${shareLandingUrl}`);
 
   return {
     articleUrl,
-    sharePreviewUrl,
-    facebookUrl: `https://www.facebook.com/sharer/sharer.php?u=${encodedPreviewUrl}`,
-    xUrl: `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedPreviewUrl}`,
-    linkedinUrl: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedPreviewUrl}`,
+    shareLandingUrl,
+    facebookUrl: `https://www.facebook.com/sharer/sharer.php?u=${encodedLandingUrl}`,
+    xUrl: `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedLandingUrl}`,
+    linkedinUrl: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedLandingUrl}`,
     whatsappUrl: `https://wa.me/?text=${encodedWhatsappMessage}`,
   };
 };

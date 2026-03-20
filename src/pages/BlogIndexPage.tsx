@@ -100,7 +100,7 @@ const BlogCardShareActions = ({ title, slug }: BlogCardShareActionsProps) => {
 
     const popup = window.open(url, "_blank", "noopener,noreferrer");
     if (!popup) {
-      window.location.href = url;
+      window.open(url, "_self");
     }
   };
 
