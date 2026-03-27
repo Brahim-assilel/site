@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { Hero } from "../components/sections/Hero";
 import { ServicesSection } from "../components/sections/ServicesSection";
+import { WebDevelopmentSection } from "../components/sections/WebDevelopmentSection";
 import { EngagementSection } from "../components/sections/EngagementSection";
 import { AboutSection } from "../components/sections/AboutSection";
 import { ValuesSection } from "../components/sections/ValuesSection";
@@ -15,6 +16,7 @@ export const HomePage = () => {
     () => [
       "accueil",
       "services",
+      "developpement-web",
       "engagement",
       "a-propos",
       "nos-valeurs",
@@ -32,6 +34,7 @@ export const HomePage = () => {
     <>
       <Hero />
       <ServicesSection />
+      <WebDevelopmentSection />
       <EngagementSection />
       <AboutSection />
       <ValuesSection />

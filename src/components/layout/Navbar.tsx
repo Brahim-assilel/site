@@ -18,6 +18,7 @@ const HOVER_CLOSE_DELAY = 120;
 export const Navbar = () => {
   const mobileNavItems = [
     { label: "Accueil", href: "/#accueil" },
+    { label: "Dév Web", href: "/#developpement-web" },
     { label: "Nos Valeurs", href: "/#nos-valeurs" },
     { label: "VoIP", href: "/voip" },
     { label: "Tarifs", href: "/tarifs" },
@@ -263,6 +264,13 @@ export const Navbar = () => {
               )}
             </AnimatePresence>
           </div>
+          <Link
+            to="/#developpement-web"
+            className="relative px-2.5 lg:px-3 py-2 text-xs lg:text-sm font-medium text-gray-300 transition-all duration-300 rounded-full group hover:text-cyan-300 hover:text-shadow-[0_0_12px_rgba(0,246,255,1)]"
+          >
+            Dév Web
+            <span className="absolute bottom-1.5 left-0 w-full h-0.5 bg-cyan-400 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out" />
+          </Link>
           <Link
             to="/#nos-valeurs"
             className="relative px-2.5 lg:px-3 py-2 text-xs lg:text-sm font-medium text-gray-300 transition-all duration-300 rounded-full group hover:text-cyan-300 hover:text-shadow-[0_0_12px_rgba(0,246,255,1)]"

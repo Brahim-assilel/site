@@ -33,12 +33,11 @@ const KeyFiguresSection = () => {
   const figures = [
     { value: 12, label: "Projets Réussis", suffix: "+" },
     { value: 98, label: "Satisfaction Client", suffix: "%" },
-    { value: 3, label: "Ans d'Expertise", suffix: "+" },
     { value: 24, label: "Support", suffix: "/7" },
   ];
 
   return (
-    <div className="grid grid-cols-2 gap-8 mt-12 text-center md:grid-cols-4">
+    <div className="grid grid-cols-2 gap-8 mt-12 text-center md:grid-cols-3">
       {figures.map((figure, index) => (
         <motion.div
           key={index}

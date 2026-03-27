@@ -11,6 +11,10 @@ import {
   setManagedBlogPostPublished,
   type ManagedBlogPostRecord,
 } from "../lib/blogAdminStore";
+import {
+  getAdminFormSubmissions,
+  type AdminFormSubmission,
+} from "../lib/formSubmissionsAdminStore";
 
 type EditorState = {
   title: string;
@@ -38,6 +42,27 @@ const createInitialEditorState = (): EditorState => ({
   published: false,
 });
 
+const FIBER_TCHAD_ARTICLE_TEMPLATE: EditorState = {
+  title: "Avancement de la fibre optique au Tchad en 2026",
+  slug: "avancement-fibre-optique-tchad-2026",
+  description:
+    "Etat des lieux de la fibre optique au Tchad: progrès récents, limites de couverture et priorités pour accélérer l'accès au haut débit.",
+  image: "",
+  category: "Réseau",
+  date: "2026-03-27",
+  readingTime: "6",
+  content: `La fibre optique avance au Tchad, mais de manière progressive et inégale selon les zones. A N'Djamena, les premières offres FTTH ont amélioré l'accès au haut débit pour des ménages et des entreprises, tandis que plusieurs zones hors capitale restent encore dépendantes de connexions plus limitées.
+
+Sur le plan institutionnel, les projets de transformation numérique soutenus par les partenaires internationaux ont permis d'accélérer les investissements dans les infrastructures critiques. Les priorités portent sur l'extension de la couverture, l'amélioration de la résilience des réseaux et la baisse du coût d'accès pour les utilisateurs finaux.
+
+Du côté des opérateurs, le marché montre des signes de dynamisme: nouvelles offres commerciales, montée en capacité, et meilleure visibilité de la fibre comme alternative sérieuse pour les usages professionnels (visioconférence, cloud, téléphonie IP, services administratifs en ligne).
+
+Malgré ces avancées, les défis restent importants. Le coût de déploiement demeure élevé, surtout dans les zones éloignées. La maintenance réseau et la qualité d'alimentation électrique impactent aussi la disponibilité réelle du service. Enfin, l'écart entre débit annoncé et performance constatée par l'utilisateur final reste un point de vigilance.
+
+A court terme, l'avancement de la fibre optique au Tchad dépendra de trois leviers: la continuité des investissements, la qualité d'exécution technique sur le terrain, et la capacité à proposer des offres réellement abordables. Si ces conditions sont réunies, la fibre peut devenir un véritable moteur de modernisation pour l'éducation, la santé, l'administration et les entreprises.`,
+  published: false,
+};
+
 const mapPostToEditorState = (post: ManagedBlogPostRecord): EditorState => ({
   title: post.title,
   slug: post.slug,
@@ -54,6 +79,7 @@ export const AdminDashboardPage = () => {
   const navigate = useNavigate();
   const [adminEmail, setAdminEmail] = useState("");
   const [posts, setPosts] = useState<ManagedBlogPostRecord[]>([]);
+  const [formSubmissions, setFormSubmissions] = useState<AdminFormSubmission[]>([]);
   const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
   const [editor, setEditor] = useState<EditorState>(createInitialEditorState);
   const [isSlugManual, setIsSlugManual] = useState(false);
@@ -70,6 +96,11 @@ export const AdminDashboardPage = () => {
   const refreshPosts = async () => {
     const nextPosts = await getManagedBlogPosts();
     setPosts(nextPosts);
+  };
+
+  const refreshFormSubmissions = async () => {
+    const nextSubmissions = await getAdminFormSubmissions(50);
+    setFormSubmissions(nextSubmissions);
   };
 
   const resetEditor = () => {
@@ -100,13 +131,15 @@ export const AdminDashboardPage = () => {
           return;
         }
         setAdminEmail(session.email || "");
-        refreshPosts().catch((loadError) => {
-          const message =
-            loadError instanceof Error
-              ? loadError.message
-              : "Impossible de charger les articles.";
-          setError(message);
-        });
+        Promise.all([refreshPosts(), refreshFormSubmissions()]).catch(
+          (loadError) => {
+            const message =
+              loadError instanceof Error
+                ? loadError.message
+                : "Impossible de charger les données admin.";
+            setError(message);
+          },
+        );
       })
       .catch(() => {
         if (!isMounted) return;
@@ -131,6 +164,16 @@ export const AdminDashboardPage = () => {
       title: value,
       slug: isSlugManual ? prev.slug : createSlugFromTitle(value),
     }));
+  };
+
+  const loadFiberTemplate = () => {
+    setSelectedPostId(null);
+    setEditor(FIBER_TCHAD_ARTICLE_TEMPLATE);
+    setIsSlugManual(true);
+    setError("");
+    setSuccessMessage(
+      "Modèle 'Avancement de la fibre optique au Tchad' chargé. Modifiez puis enregistrez.",
+    );
   };
 
   const parseReadingTime = (value: string) => {
@@ -162,6 +205,9 @@ export const AdminDashboardPage = () => {
       setEditor(mapPostToEditorState(savedPost));
       setIsSlugManual(true);
       await refreshPosts();
+      void refreshFormSubmissions().catch(() => {
+        // Non bloquant pour l'edition d'articles.
+      });
       setSuccessMessage(
         savedPost.published
           ? "Article enregistré et publié."
@@ -195,6 +241,9 @@ export const AdminDashboardPage = () => {
     try {
       await setManagedBlogPostPublished(post.id, nextPublished);
       await refreshPosts();
+      void refreshFormSubmissions().catch(() => {
+        // Non bloquant pour l'edition d'articles.
+      });
       if (selectedPostId === post.id) {
         setEditor((prev) => ({ ...prev, published: nextPublished }));
       }
@@ -230,6 +279,9 @@ export const AdminDashboardPage = () => {
         resetEditor();
       } else {
         await refreshPosts();
+        void refreshFormSubmissions().catch(() => {
+          // Non bloquant pour l'edition d'articles.
+        });
         setSuccessMessage("Article supprimé.");
       }
       trackEvent("admin_blog_deleted", {
@@ -308,13 +360,22 @@ export const AdminDashboardPage = () => {
                 <h2 className="text-lg font-semibold text-slate-100">
                   {selectedPostId ? "Modifier l'article" : "Nouvel article"}
                 </h2>
-                <button
-                  type="button"
-                  onClick={resetEditor}
-                  className="text-sm transition-colors text-slate-400 hover:text-cyan-300"
-                >
-                  Nouveau
-                </button>
+                <div className="flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={loadFiberTemplate}
+                    className="text-sm transition-colors text-amber-300 hover:text-amber-200"
+                  >
+                    Charger modèle fibre Tchad
+                  </button>
+                  <button
+                    type="button"
+                    onClick={resetEditor}
+                    className="text-sm transition-colors text-slate-400 hover:text-cyan-300"
+                  >
+                    Nouveau
+                  </button>
+                </div>
               </div>
 
               <div className="grid grid-cols-1 gap-4 mt-5 md:grid-cols-2">
@@ -547,6 +608,88 @@ export const AdminDashboardPage = () => {
                   ))
                 )}
               </div>
+            </div>
+          </div>
+
+          <div className="p-5 mt-6 border rounded-xl bg-slate-800/30 border-white/10">
+            <div className="flex items-center justify-between gap-3">
+              <h2 className="text-lg font-semibold text-slate-100">
+                Demandes formulaires
+              </h2>
+              <button
+                type="button"
+                onClick={() => {
+                  setError("");
+                  setSuccessMessage("");
+                  refreshFormSubmissions().catch((loadError) => {
+                    const message =
+                      loadError instanceof Error
+                        ? loadError.message
+                        : "Impossible de rafraichir les demandes.";
+                    setError(message);
+                  });
+                }}
+                className="text-sm transition-colors text-slate-400 hover:text-cyan-300"
+              >
+                Rafraichir
+              </button>
+            </div>
+            <p className="mt-2 text-sm text-slate-400">
+              Historique des demandes audit/contact avec ID de suivi.
+            </p>
+
+            <div className="mt-5 space-y-3 max-h-[24rem] overflow-auto pr-1">
+              {formSubmissions.length === 0 ? (
+                <p className="text-sm text-slate-500">
+                  Aucune soumission enregistrée pour le moment.
+                </p>
+              ) : (
+                formSubmissions.map((submission) => (
+                  <div
+                    key={submission.id}
+                    className="p-4 border rounded-lg bg-slate-900/40 border-white/10"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <p className="font-semibold text-slate-100">
+                          {submission.formName}
+                        </p>
+                        <p className="mt-1 text-xs text-cyan-300">
+                          {submission.submissionId}
+                        </p>
+                      </div>
+                      <span className="text-xs text-slate-500">
+                        {new Date(submission.createdAt).toLocaleString("fr-FR")}
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-1 gap-1 mt-3 text-xs text-slate-300 md:grid-cols-2">
+                      <p>Nom: {submission.requesterName || "N/A"}</p>
+                      <p>Email: {submission.requesterEmail || "N/A"}</p>
+                      <p>Entreprise: {submission.company || "N/A"}</p>
+                      <p>Téléphone: {submission.requesterPhone || "N/A"}</p>
+                    </div>
+                    {submission.message ? (
+                      <p className="mt-3 text-xs leading-relaxed text-slate-400">
+                        Message: {submission.message}
+                      </p>
+                    ) : null}
+                    {submission.requesterEmail ? (
+                      <div className="mt-3">
+                        <a
+                          href={`mailto:${submission.requesterEmail}?subject=${encodeURIComponent(
+                            `Reponse a votre demande (${submission.submissionId})`,
+                          )}&body=${encodeURIComponent(
+                            `Bonjour ${submission.requesterName || ""},\n\nSuite a votre demande (${submission.submissionId}),\n\n`,
+                          )}`}
+                          className="inline-flex px-3 py-1 text-xs font-semibold transition-colors rounded-full bg-emerald-600/20 text-emerald-300 hover:bg-emerald-600/35"
+                        >
+                          Répondre
+                        </a>
+                      </div>
+                    ) : null}
+                  </div>
+                ))
+              )}
             </div>
           </div>
 

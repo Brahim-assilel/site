@@ -23,6 +23,10 @@ import {
   updateBlogPost,
 } from "./api/blog-db";
 import {
+  createFormSubmission,
+  listAdminFormSubmissions,
+} from "./server/form-submissions-db";
+import {
   isUniqueViolationError,
   parseApiBody,
   parseBlogPostId,
@@ -184,7 +188,7 @@ export default defineConfig({
         const toEmailRaw =
           env.FORM_TO_EMAILS ||
           env.FORM_TO_EMAIL ||
-          "bramazene@gmail.com";
+          "contact@assilel-tech.net";
         const toEmails = Array.from(
           new Set(
             toEmailRaw
@@ -235,6 +239,11 @@ export default defineConfig({
           return {
             ok: true as const,
           };
+        };
+        const parseLimit = (rawValue: string | null) => {
+          const parsed = Number(rawValue);
+          if (!Number.isFinite(parsed)) return 50;
+          return Math.max(1, Math.min(200, Math.round(parsed)));
         };
 
         server.middlewares.use(async (req, res, next) => {
@@ -517,6 +526,22 @@ export default defineConfig({
 
             if (req.method === "GET") {
               try {
+                const host = getHeaderValue(req.headers.host) || "localhost:5173";
+                const origin = `http://${host}`;
+                const requestUrl = new URL(
+                  req.url || "/api/admin-blog-posts",
+                  origin,
+                );
+                const resource = requestUrl.searchParams.get("resource") || "";
+                if (resource === "form-submissions") {
+                  const limit = parseLimit(requestUrl.searchParams.get("limit"));
+                  const submissions = await listAdminFormSubmissions(env, limit);
+                  res.statusCode = 200;
+                  res.setHeader("Content-Type", "application/json");
+                  res.end(JSON.stringify({ submissions }));
+                  return;
+                }
+
                 const posts = await listAdminBlogPosts(env);
                 res.statusCode = 200;
                 res.setHeader("Content-Type", "application/json");
@@ -721,6 +746,9 @@ export default defineConfig({
             const nowDate = new Date();
             const now = nowDate.toISOString();
             const submissionId = generateSubmissionId(nowDate);
+            const normalizedFields = Object.fromEntries(
+              cleanedFields.map(([key, value]) => [key, String(value)]),
+            );
             const subject = `[${submissionId}] Nouveau formulaire: ${safeFormName}`;
             const textLines = cleanedFields.map(
               ([key, value]) => `${key}: ${value}`,
@@ -819,9 +847,24 @@ export default defineConfig({
               }
             }
 
+            try {
+              await createFormSubmission(env, {
+                submissionId,
+                formName: safeFormName,
+                fields: normalizedFields,
+                clientIp,
+              });
+            } catch (storageError) {
+              // Ne bloque pas la soumission principale si le stockage échoue.
+              console.error(
+                `[${submissionId}] Persist submission failed`,
+                storageError,
+              );
+            }
+
             res.statusCode = 200;
             res.setHeader("Content-Type", "application/json");
-            res.end(JSON.stringify({ ok: true }));
+            res.end(JSON.stringify({ ok: true, submissionId }));
           } catch {
             res.statusCode = 400;
             res.setHeader("Content-Type", "application/json");

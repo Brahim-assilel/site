@@ -15,6 +15,210 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "fibre-optique-tchad-moov-africa",
+    title:
+      "Fibre optique au Tchad : entre modernisation numérique et offensive de Moov Africa Tchad",
+    description:
+      "Le Tchad accélère sa transition numérique avec la fibre optique, entre projet structurant soutenu par la Banque mondiale et premières offres FTTH à N'Djamena.",
+    image: "/fibre-optique-cable.jpg",
+    category: "Réseau",
+    date: "2026-03-21",
+    readingTime: 6,
+    content: (
+      <div className="space-y-10 text-slate-300">
+        <section className="p-6 border rounded-2xl bg-slate-900/60 border-white/10">
+          <p className="text-lg leading-relaxed">
+            Le Tchad tente de rattraper son retard numérique en misant sur la fibre optique.
+            Entre projet national soutenu par la Banque mondiale et premières offres FTTH à
+            N&apos;Djamena, notamment celles de Moov Africa Tchad, le pays entre progressivement
+            dans l&apos;ère du haut débit. Mais entre ambition publique, communication commerciale et
+            réalité du terrain, le chantier reste immense.
+          </p>
+        </section>
+
+        <section>
+          <p className="leading-relaxed">
+            Au Tchad, la fibre optique n&apos;est plus seulement un sujet technique réservé aux
+            opérateurs télécoms. Elle devient un enjeu économique, administratif et social. La
+            Banque mondiale a approuvé le Chad Digital Transformation Project le 25 septembre 2024,
+            avec une entrée en vigueur le 30 octobre 2024. Le projet vise à élargir l&apos;accès à une
+            connectivité haut débit abordable et résiliente et à améliorer la capacité de l&apos;État à
+            fournir des services publics numériques.
+          </p>
+        </section>
+
+        <section>
+          <p className="leading-relaxed">
+            L&apos;ambition affichée est lourde. Sur une durée de cinq ans, ce programme doit permettre
+            à plus de 4,5 millions de personnes en zones rurales d&apos;accéder au haut débit et à plus
+            de 2 millions de personnes d&apos;utiliser activement les plateformes publiques numériques
+            soutenues par le projet. Ces objectifs montrent que la connectivité n&apos;est plus présentée
+            comme un simple confort, mais comme une infrastructure de développement.
+          </p>
+        </section>
+
+        <section>
+          <p className="leading-relaxed">
+            Dans ce paysage encore en construction, Moov Africa Tchad occupe une place visible sur
+            le plan commercial. L&apos;opérateur communique publiquement sur son offre &quot;Fibre Fi Beti&quot;,
+            une formule FTTH à N&apos;Djamena présentée comme une fibre jusqu&apos;au domicile, avec une
+            connexion illimitée, un abonnement démarrant à partir de 25 000 FCFA par mois, et une
+            souscription possible via le 4040 ou en agence.
+          </p>
+        </section>
+
+        <section>
+          <p className="leading-relaxed">
+            La présence de Moov Africa Tchad dans ce segment est importante, car elle marque le
+            passage d&apos;une logique de dorsale ou de backbone à une logique d&apos;accès résidentiel.
+            Autrement dit, la fibre au Tchad ne sert plus seulement à relier des infrastructures :
+            elle commence à être proposée directement aux ménages, au moins dans certaines parties
+            de la capitale.
+          </p>
+        </section>
+
+        <section>
+          <p className="leading-relaxed">
+            Mais il ne faut pas raconter des histoires. Annoncer la fibre ne veut pas dire que le
+            problème de la connectivité est réglé. Le Tchad reste confronté à des contraintes
+            lourdes : coût du déploiement, vastes distances, enclavement, maintenance, alimentation
+            électrique et raccordement effectif des usagers finaux. Les documents de la Banque
+            mondiale montrent clairement que le projet porte justement sur une connectivité plus
+            abordable et plus résiliente, ce qui prouve que les fragilités structurelles sont
+            toujours là.
+          </p>
+        </section>
+
+        <section>
+          <p className="leading-relaxed">
+            La fibre garde pourtant un potentiel énorme. Elle permet des débits plus élevés, une
+            meilleure stabilité et des usages plus exigeants : services publics numériques, travail
+            en ligne, éducation à distance, services financiers et outils professionnels. L&apos;UIT
+            rappelle dans ses publications récentes sur l&apos;Afrique que le développement du haut débit
+            est un facteur direct de transformation économique et que l&apos;accessibilité reste un défi
+            central sur le continent.
+          </p>
+        </section>
+
+        <section>
+          <p className="leading-relaxed">
+            Le vrai test sera donc la qualité réelle du service. Une offre FTTH sérieuse ne se
+            résume pas à une affiche avec un débit théorique. Ce qui compte, c&apos;est la stabilité, la
+            disponibilité, la latence, la couverture effective et la capacité d&apos;intervention en cas
+            de panne. C&apos;est là que se fera la différence entre une promesse marketing et une vraie
+            transformation numérique. Cette exigence vaut pour tout le secteur, y compris pour les
+            offres visibles aujourd&apos;hui comme celles de Moov Africa Tchad.
+          </p>
+        </section>
+
+        <section className="p-6 border rounded-2xl bg-slate-800/40 border-white/10">
+          <h2 className="mb-3 text-2xl font-bold text-cyan-300">Conclusion</h2>
+          <p className="leading-relaxed">
+            Le Tchad est à un moment charnière. Les bases sont là : un projet structurant soutenu
+            par des partenaires internationaux, une volonté de moderniser l&apos;accès au haut débit, et
+            des offres FTTH déjà commercialisées à N&apos;Djamena par Moov Africa Tchad. Mais la vérité
+            est simple : le pays est encore au début du parcours. Si les investissements suivent et
+            que la qualité de service devient une vraie priorité, la fibre optique peut devenir un
+            levier puissant de transformation. Sinon, elle restera une promesse de plus, séduisante
+            dans les discours mais limitée dans ses effets réels.
+          </p>
+        </section>
+
+        <section className="p-6 border rounded-2xl bg-slate-900/40 border-white/10">
+          <h2 className="mb-4 text-2xl font-bold text-cyan-300">Sources</h2>
+          <ul className="space-y-3 leading-relaxed list-disc list-inside">
+            <li>
+              <a
+                href="https://www.worldbank.org/en/news/press-release/2024/09/25/world-bank-increases-access-to-broadband-connectivity-in-chad"
+                target="_blank"
+                rel="noreferrer"
+                className="underline text-cyan-300 hover:text-cyan-200"
+              >
+                Banque mondiale - World Bank Increases Access to Broadband Connectivity in Chad
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://documents.worldbank.org/en/publication/documents-reports/documentdetail/099090624105035738"
+                target="_blank"
+                rel="noreferrer"
+                className="underline text-cyan-300 hover:text-cyan-200"
+              >
+                Banque mondiale - Chad Digital Transformation Project (P180000)
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://documents1.worldbank.org/curated/en/099012325213075227/pdf/P180000-d44096d9-aafa-4abe-b33c-429eafeda123.pdf"
+                target="_blank"
+                rel="noreferrer"
+                className="underline text-cyan-300 hover:text-cyan-200"
+              >
+                Banque mondiale - Implementation Status &amp; Results Report (janvier 2025)
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://documents1.worldbank.org/curated/en/099082425101022763/txt/P180000-aa0cb654-fd15-49e7-8296-f0b965e2e523.txt"
+                target="_blank"
+                rel="noreferrer"
+                className="underline text-cyan-300 hover:text-cyan-200"
+              >
+                Banque mondiale - Implementation Status &amp; Results Report (août 2025)
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.facebook.com/moovafrica.td/posts/-waouh-moov-africa-vous-pr%C3%A9sente-fibre-fi-beti-la-fibre-jusqu%C3%A0-votre-domicile-%C3%A0-/1046777117659850/"
+                target="_blank"
+                rel="noreferrer"
+                className="underline text-cyan-300 hover:text-cyan-200"
+              >
+                Moov Africa Tchad - Communications publiques sur &quot;Fibre Fi Beti&quot;
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.itu.int/dms_pub/itu-d/opb/ind/D-IND-SDDT_AFR-2025-PDF-E.pdf"
+                target="_blank"
+                rel="noreferrer"
+                className="underline text-cyan-300 hover:text-cyan-200"
+              >
+                UIT - Measuring Digital Development: Facts and Figures for Africa 2025
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.itu.int/dms_pub/itu-s/opb/pol/S-POL-BROADBAND.32-2025-PDF-E.pdf"
+                target="_blank"
+                rel="noreferrer"
+                className="underline text-cyan-300 hover:text-cyan-200"
+              >
+                UIT / UNESCO - The State of Broadband in Africa 2025
+              </a>
+            </li>
+          </ul>
+        </section>
+      </div>
+    ),
+    footer: (
+      <footer className="p-8 mt-16 text-center border rounded-3xl bg-slate-900/50 border-white/10">
+        <h2 className="text-2xl font-bold text-slate-100">
+          Besoin d&apos;un accompagnement réseau au Tchad ?
+        </h2>
+        <p className="mt-3 text-slate-300">
+          Nous vous aidons à évaluer la connectivité réelle, structurer vos priorités techniques et
+          déployer des solutions adaptées au terrain.
+        </p>
+        <div className="mt-6">
+          <Button href="/contact" variant="primary">
+            Parler à un expert
+          </Button>
+        </div>
+      </footer>
+    ),
+  },
+  {
     slug: "dhis2-lenteur-tchad",
     title:
       "DHIS2 au Tchad : Pourquoi le déploiement est-il si lent et comment y remédier ?",

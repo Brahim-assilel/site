@@ -5,6 +5,7 @@ import {
   setBlogPostPublished,
   updateBlogPost,
 } from "./blog-db.js";
+import { listAdminFormSubmissions } from "../server/form-submissions-db.js";
 import {
   isUniqueViolationError,
   parseApiBody,
@@ -23,6 +24,7 @@ import {
 type ApiRequest = {
   method?: string;
   body?: unknown;
+  query?: Record<string, string | string[] | undefined>;
   headers?: Record<string, string | string[] | undefined>;
   socket?: { remoteAddress?: string };
 };
@@ -34,6 +36,13 @@ type ApiResponse = {
 
 const getHeaderValue = (value: string | string[] | undefined) =>
   Array.isArray(value) ? value[0] : value;
+
+const parseLimit = (rawValue: string | string[] | undefined) => {
+  const value = Array.isArray(rawValue) ? rawValue[0] : rawValue;
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed)) return 50;
+  return Math.max(1, Math.min(200, Math.round(parsed)));
+};
 
 const isAdminAuthenticated = (req: ApiRequest) => {
   const clientIp = getClientIp(req.headers, req.socket?.remoteAddress);
@@ -68,6 +77,16 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
 
   if (req.method === "GET") {
     try {
+      const resource =
+        typeof req.query?.resource === "string" ? req.query.resource.trim() : "";
+      if (resource === "form-submissions") {
+        const submissions = await listAdminFormSubmissions(
+          process.env,
+          parseLimit(req.query?.limit),
+        );
+        return res.status(200).json({ submissions });
+      }
+
       const posts = await listAdminBlogPosts(process.env);
       return res.status(200).json({ posts });
     } catch (error) {

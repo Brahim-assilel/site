@@ -1,3 +1,5 @@
+import { createFormSubmission } from "../server/form-submissions-db.js";
+
 type ApiRequest = {
   method?: string;
   body?: unknown;
@@ -136,7 +138,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
   const toEmailRaw =
     process.env.FORM_TO_EMAILS?.trim() ||
     process.env.FORM_TO_EMAIL?.trim() ||
-    "bramazene@gmail.com";
+    "contact@assilel-tech.net";
   const toEmails = Array.from(
     new Set(
       toEmailRaw
@@ -190,6 +192,9 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
   const nowDate = new Date();
   const now = nowDate.toISOString();
   const submissionId = generateSubmissionId(nowDate);
+  const normalizedFields = Object.fromEntries(
+    cleanedFields.map(([key, value]) => [key, String(value)]),
+  );
   const subject = `[${submissionId}] Nouveau formulaire: ${safeFormName}`;
   const textLines = cleanedFields.map(([key, value]) => `${key}: ${value}`);
   const text = [
@@ -278,5 +283,17 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     }
   }
 
-  return res.status(200).json({ ok: true });
+  try {
+    await createFormSubmission(process.env, {
+      submissionId,
+      formName: safeFormName,
+      fields: normalizedFields,
+      clientIp,
+    });
+  } catch (storageError) {
+    // Ne bloque pas la soumission principale si le stockage échoue.
+    console.error(`[${submissionId}] Persist submission failed`, storageError);
+  }
+
+  return res.status(200).json({ ok: true, submissionId });
 }
