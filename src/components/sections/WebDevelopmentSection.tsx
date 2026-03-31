@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import {
-  ArrowRight,
   CheckCircle2,
   Code2,
   Gauge,
@@ -503,25 +502,6 @@ export const WebDevelopmentSection = () => {
           )}
         </div>
 
-        <div className="p-8 mt-10 text-center border rounded-3xl bg-slate-900/40 border-cyan-300/20">
-          <p className="mb-2 text-xs font-semibold tracking-wider uppercase text-cyan-300">
-            Prêt à lancer votre projet web ?
-          </p>
-          <p className="text-slate-300">
-            Livraison rapide, code propre et accompagnement local.
-          </p>
-          <div className="flex flex-col items-center justify-center gap-3 mt-6 sm:flex-row">
-            <Button href="/#devis-rapide-web" variant="primary">
-              Demander un devis
-            </Button>
-            <Button href="/#realisations-web" variant="glass">
-              Voir nos réalisations <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
-          </div>
-          <p className="mt-4 text-xs text-slate-500">
-            Réponse sous 24h ouvrées pour cadrer votre besoin.
-          </p>
-        </div>
       </div>
     </section>
   );
