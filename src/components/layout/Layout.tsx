@@ -7,6 +7,7 @@ import { Footer } from "./Footer";
 import { ScrollToTopButton } from "../ui/ScrollToTopButton";
 import { FloatingQuoteButton } from "../ui/FloatingQuoteButton";
 import { FloatingWhatsAppButton } from "../ui/FloatingWhatsAppButton";
+import { MobileBottomNav } from "../ui/MobileBottomNav";
 import { trackPageView } from "../../lib/analytics";
 
 const ScrollToTop = () => {
@@ -45,6 +46,7 @@ export const Layout = () => {
       <AnimatePresence mode="wait">
         <motion.main
           key={location.pathname}
+          className="pb-24 md:pb-0"
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 15 }}
@@ -54,6 +56,7 @@ export const Layout = () => {
         </motion.main>
       </AnimatePresence>
       <Footer />
+      <MobileBottomNav />
       <FloatingWhatsAppButton />
       <ScrollToTopButton />
       <FloatingQuoteButton />

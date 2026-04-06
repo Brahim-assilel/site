@@ -1,0 +1,15 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="title desc">
+  <title id="title">Jumia</title>
+  <desc id="desc">Jumia styled logo placeholder</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ff8a00"/>
+      <stop offset="100%" stop-color="#ff6f00"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="360" rx="28" fill="url(#bg)"/>
+  <circle cx="520" cy="86" r="12" fill="#ffffff" fill-opacity="0.35"/>
+  <g fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-weight="800" text-anchor="middle">
+    <text x="320" y="206" font-size="108" letter-spacing="2">JUMIA</text>
+  </g>
+</svg>

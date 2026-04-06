@@ -76,14 +76,14 @@ export const AuditSection = () => {
   };
 
   return (
-    <section id="audit" className="py-24">
+    <section id="audit" className="py-20 md:py-24">
       <div className="max-w-4xl px-4 mx-auto sm:px-6 lg:px-8">
-        <div className="p-10 border shadow-2xl bg-slate-900/50 border-white/10 shadow-black/40 md:p-14 rounded-3xl backdrop-blur-xl">
-          <div className="mb-12 text-center">
-            <h2 className="mb-4 text-3xl font-bold text-slate-100">
+        <div className="p-6 border shadow-2xl bg-slate-900/60 border-white/10 shadow-black/40 sm:p-8 md:p-14 rounded-2xl md:rounded-3xl backdrop-blur-xl">
+          <div className="mb-8 text-center md:mb-12">
+            <h2 className="mb-3 text-2xl font-bold sm:text-3xl text-slate-100">
               Demandez votre Audit Gratuit
             </h2>
-            <p className="text-slate-400">
+            <p className="text-sm leading-relaxed md:text-base text-slate-300">
               Remplissez ce formulaire pour obtenir une analyse gratuite de
               votre infrastructure.
             </p>
@@ -120,7 +120,7 @@ export const AuditSection = () => {
                 className="hidden"
                 aria-hidden="true"
               />
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                 <div>
                   <label className="block mb-2 text-sm font-bold text-slate-300">
                     Nom complet
@@ -133,7 +133,7 @@ export const AuditSection = () => {
                     className={`w-full bg-slate-800/50 border rounded-xl px-4 py-3.5 text-slate-100 focus:outline-none focus:ring-2 transition-all ${
                       errors.name
                         ? "border-red-500 ring-red-500"
-                        : "border-slate-700 focus:ring-blue-400"
+                        : "border-slate-700 focus:ring-cyan-400"
                     }`}
                     // placeholder="Jean Dupont"
                   />
@@ -153,7 +153,7 @@ export const AuditSection = () => {
                     className={`w-full bg-slate-800/50 border rounded-xl px-4 py-3.5 text-slate-100 focus:outline-none focus:ring-2 transition-all ${
                       errors.email
                         ? "border-red-500 ring-red-500"
-                        : "border-slate-700 focus:ring-blue-400"
+                        : "border-slate-700 focus:ring-cyan-400"
                     }`}
                     // placeholder="jean@societe.com"
                   />
@@ -173,7 +173,7 @@ export const AuditSection = () => {
                     className={`w-full bg-slate-800/50 border rounded-xl px-4 py-3.5 text-slate-100 focus:outline-none focus:ring-2 transition-all ${
                       errors.company
                         ? "border-red-500 ring-red-500"
-                        : "border-slate-700 focus:ring-blue-400"
+                        : "border-slate-700 focus:ring-cyan-400"
                     }`}
                     placeholder="Votre Société"
                   />
@@ -195,7 +195,7 @@ export const AuditSection = () => {
                     name="website"
                     value={formData.website}
                     onChange={handleChange}
-                    className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3.5 text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all"
+                    className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3.5 text-slate-100 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all"
                     placeholder="https://societe.com"
                   />
                 </div>
@@ -212,7 +212,7 @@ export const AuditSection = () => {
                   rows={4}
                   value={formData.message}
                   onChange={handleChange}
-                  className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3.5 text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all"
+                  className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3.5 text-slate-100 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all"
                   placeholder="Décrivez brièvement votre besoin..."
                 ></textarea>
               </div>

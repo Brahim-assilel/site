@@ -8,7 +8,7 @@ export const FloatingWhatsAppButton = () => {
       href={CONTACT_WHATSAPP_URL}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed z-50 flex items-center gap-2 px-4 py-3 text-sm font-semibold text-white transition-colors rounded-full shadow-2xl left-4 bottom-5 bg-green-600/95 hover:bg-green-500 sm:left-6"
+      className="fixed z-50 flex items-center gap-2 px-4 py-3 text-sm font-semibold text-white transition-colors rounded-full shadow-2xl left-4 bottom-24 bg-green-600/95 hover:bg-green-500 sm:left-6 md:bottom-5"
       aria-label="Contact WhatsApp"
       onClick={() =>
         trackEvent("cta_click", {

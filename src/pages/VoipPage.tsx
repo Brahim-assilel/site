@@ -333,7 +333,7 @@ export const VoipPage = () => {
 
       <section className="mt-16">
         <h2 className="text-2xl font-bold text-slate-100 sm:text-3xl md:text-4xl font-display">
-          Pourquoi la VoIP est clé pour les PME
+          Pourquoi la VoIP est la clé pour les PME
         </h2>
         <p className="max-w-3xl mt-4 leading-relaxed text-slate-300/90">
           La VoIP ne se limite pas à téléphoner moins cher. Elle apporte un

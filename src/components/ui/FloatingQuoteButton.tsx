@@ -21,7 +21,7 @@ export const FloatingQuoteButton = () => {
   if (!isVoipPage) return null;
 
   return (
-    <div className="fixed z-50 bottom-5 right-4 sm:right-6">
+    <div className="fixed z-50 right-4 bottom-24 sm:right-6 md:bottom-5">
       <Button
         href="/demo#devis"
         variant="primary"

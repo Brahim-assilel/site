@@ -4,7 +4,7 @@ import { CONTACT_EMAIL, CONTACT_FACEBOOK_URL } from "../../config/brand";
 import { trackEvent } from "../../lib/analytics";
 
 export const Footer = () => (
-  <footer className="relative py-16 border-t border-white/10 bg-slate-900/50 backdrop-blur-lg">
+  <footer className="relative pt-14 pb-24 border-t border-white/10 bg-slate-900/50 backdrop-blur-lg md:pb-16">
     <div className="px-4 mx-auto text-center max-w-7xl sm:px-6 lg:px-8 md:text-left">
       <div className="grid grid-cols-1 gap-12 md:grid-cols-4">
         <div className="col-span-1 md:col-span-2">

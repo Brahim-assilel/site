@@ -160,13 +160,13 @@ export const Navbar = () => {
 
   return (
     <motion.nav
-      className={`fixed left-0 right-0 z-50 w-[95%] max-w-6xl mx-auto transition-all duration-300 ease-in-out rounded-full
-      ${isScrolled ? "top-4 shadow-2xl shadow-black/50" : "top-6"}`}
+      className={`fixed left-0 right-0 z-50 w-[96%] max-w-6xl mx-auto transition-all duration-300 ease-in-out rounded-full
+      ${isScrolled ? "top-3 md:top-4 shadow-2xl shadow-black/50" : "top-3 md:top-6"}`}
       animate={{ y: isScrolled ? -2 : 0 }}
       transition={{ duration: 0.25, ease: "easeOut" }}
     >
       <div
-        className={`relative flex items-center justify-between h-16 px-4 transition-all duration-300 border rounded-full backdrop-blur-xl ${
+        className={`relative flex items-center justify-between h-14 md:h-16 px-3 md:px-4 transition-all duration-300 border rounded-full backdrop-blur-xl ${
           isScrolled
             ? "bg-slate-900/80 border-cyan-300/20 shadow-2xl shadow-black/60"
             : "bg-slate-800/45 border-white/10 shadow-lg"
@@ -389,7 +389,7 @@ export const Navbar = () => {
               setIsServicesOpen(false);
               setIsVoipOpen(false);
             }}
-            className="p-2 text-gray-300 md:hidden hover:text-white"
+            className="p-2.5 text-gray-300 md:hidden hover:text-white"
             aria-label={isOpen ? "Fermer le menu" : "Ouvrir le menu"}
             aria-expanded={isOpen}
           >
@@ -404,16 +404,16 @@ export const Navbar = () => {
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.16, ease: "easeOut" }}
-              className="absolute w-full p-4 mt-2 overflow-hidden border bg-slate-900/90 backdrop-blur-lg border-white/10 rounded-3xl md:hidden top-full"
+              className="absolute w-full p-3 mt-2 overflow-hidden border bg-slate-900/95 backdrop-blur-lg border-white/10 rounded-3xl md:hidden top-full"
             >
-              <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+              <div className="px-2 pt-2 pb-2 space-y-1">
                 {mobileNavItems.map((item) => (
                   <Link
                     key={item.label}
                     to={item.href}
                     onMouseEnter={() => preloadRoute(item.href)}
                     onClick={() => setIsOpen(false)}
-                    className="block px-4 py-3 text-lg text-center text-gray-200 rounded-xl hover:bg-white/5 hover:text-white"
+                    className="block px-4 py-2.5 text-base text-center text-gray-200 rounded-xl hover:bg-white/5 hover:text-white"
                   >
                     {item.label}
                   </Link>
@@ -422,7 +422,7 @@ export const Navbar = () => {
                   <button
                     type="button"
                     onClick={() => setIsMobileServicesOpen((prev) => !prev)}
-                    className="flex items-center justify-center w-full gap-2 px-4 py-3 text-lg text-center text-gray-200 rounded-xl hover:bg-white/5 hover:text-white"
+                    className="flex items-center justify-center w-full gap-2 px-4 py-2.5 text-base text-center text-gray-200 rounded-xl hover:bg-white/5 hover:text-white"
                     aria-expanded={isMobileServicesOpen}
                     aria-controls="mobile-services-menu"
                   >
@@ -454,7 +454,7 @@ export const Navbar = () => {
                               setIsMobileServicesOpen(false);
                               setIsOpen(false);
                             }}
-                            className="block px-4 py-2 text-base text-center text-gray-300 rounded-xl hover:bg-white/5 hover:text-white"
+                            className="block px-4 py-2 text-sm text-center text-gray-300 rounded-xl hover:bg-white/5 hover:text-white"
                           >
                             {service.title}
                           </Link>
@@ -462,6 +462,15 @@ export const Navbar = () => {
                       </motion.div>
                     )}
                   </AnimatePresence>
+                </div>
+                <div className="pt-1">
+                  <Button
+                    href="/#audit"
+                    className="w-full"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Demander un audit
+                  </Button>
                 </div>
               </div>
             </motion.div>

@@ -91,31 +91,31 @@ export const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-24 overflow-hidden">
+    <section id="contact" className="py-20 overflow-hidden md:py-24">
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-16">
+        <div className="grid grid-cols-1 gap-12 md:gap-16">
           <div className="lg:py-12">
-            <h2 className="text-3xl font-bold tracking-tight text-slate-100 sm:text-4xl">
+            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl text-slate-100">
               Contactez-nous
             </h2>
-            <p className="mt-4 text-lg leading-8 text-slate-400">
+            <p className="mt-3 text-base leading-relaxed md:text-lg md:leading-8 text-slate-300">
               Prêt à moderniser votre infrastructure ? Parlez-nous de votre
               projet.
             </p>
-            <div className="mt-10 space-y-8">
-              <div className="flex gap-6">
+            <div className="mt-8 space-y-5 md:mt-10 md:space-y-8">
+              <div className="flex gap-4 md:gap-6">
                 <MapPin className="flex-shrink-0 w-6 h-6 text-blue-400" />
                 <p className="text-slate-400">{CONTACT_ADDRESS}</p>
               </div>
-              <div className="flex gap-6">
+              <div className="flex gap-4 md:gap-6">
                 <Phone className="flex-shrink-0 w-6 h-6 text-blue-400" />
                 <p className="text-slate-400">{CONTACT_PHONE}</p>
               </div>
-              <div className="flex gap-6">
+              <div className="flex gap-4 md:gap-6">
                 <Mail className="flex-shrink-0 w-6 h-6 text-blue-400" />
                 <p className="text-slate-400">{CONTACT_EMAIL}</p>
               </div>
-              <div className="flex gap-6">
+              <div className="flex gap-4 md:gap-6">
                 <MessageCircle className="flex-shrink-0 w-6 h-6 text-green-400" />
                 <a
                   href={CONTACT_WHATSAPP_URL}
@@ -132,7 +132,7 @@ export const Contact = () => {
                   WhatsApp: {CONTACT_WHATSAPP}
                 </a>
               </div>
-              <div className="flex gap-6">
+              <div className="flex gap-4 md:gap-6">
                 <a
                   href={CONTACT_FACEBOOK_URL}
                   target="_blank"
@@ -161,7 +161,7 @@ export const Contact = () => {
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="mt-12">
+              <form onSubmit={handleSubmit} className="mt-10 md:mt-12">
                 <input
                   type="text"
                   name="__hp"
@@ -172,7 +172,7 @@ export const Contact = () => {
                   className="hidden"
                   aria-hidden="true"
                 />
-                <div className="grid grid-cols-1 gap-y-6 gap-x-8 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-x-8 gap-y-5 sm:gap-y-6 sm:grid-cols-2">
                   <div className="sm:col-span-2">
                     <label className="block mb-2 text-sm font-bold text-slate-300">
                       Nom complet
@@ -186,7 +186,7 @@ export const Contact = () => {
                         className={`w-full bg-slate-800/50 border rounded-xl px-4 py-3.5 text-slate-100 focus:outline-none focus:ring-2 transition-all ${
                           errors.name
                             ? "border-red-500 ring-red-500"
-                            : "border-slate-700 focus:ring-blue-400"
+                            : "border-slate-700 focus:ring-cyan-400"
                         }`}
                         //placeholder="Jean Dupont"
                       />
@@ -210,7 +210,7 @@ export const Contact = () => {
                         className={`w-full bg-slate-800/50 border rounded-xl px-4 py-3.5 text-slate-100 focus:outline-none focus:ring-2 transition-all ${
                           errors.email
                             ? "border-red-500 ring-red-500"
-                            : "border-slate-700 focus:ring-blue-400"
+                            : "border-slate-700 focus:ring-cyan-400"
                         }`}
                         //placeholder="jean@societe.com"
                       />
@@ -252,7 +252,7 @@ export const Contact = () => {
                     className={`w-full bg-slate-800/50 border rounded-xl px-4 py-3.5 text-slate-100 focus:outline-none focus:ring-2 transition-all ${
                       errors.message
                         ? "border-red-500 ring-red-500"
-                        : "border-slate-700 focus:ring-blue-400"
+                        : "border-slate-700 focus:ring-cyan-400"
                     }`}
                     placeholder="Décrivez votre question ou votre projet..."
                   />
@@ -269,7 +269,7 @@ export const Contact = () => {
                   <Button
                     as="button"
                     type="submit"
-                    className="w-full py-4"
+                    className="w-full py-3.5 md:py-4"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? "Envoi en cours..." : "Envoyer la demande"}
