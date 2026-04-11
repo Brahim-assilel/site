@@ -85,6 +85,15 @@ const renderShareHtml = (articleUrl: string, title: string, imageUrl: string) =>
   return `<!doctype html>
 <html lang="fr">
   <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CB8SFNSJC3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-CB8SFNSJC3');
+    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>${safeTitle}</title>
@@ -121,3 +130,5 @@ export default function handler(req: ApiRequest, res: ApiResponse) {
   res.setHeader("Cache-Control", "public, max-age=300, s-maxage=900");
   res.end(html);
 }
+
+

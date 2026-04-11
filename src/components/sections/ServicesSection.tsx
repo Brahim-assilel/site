@@ -235,6 +235,14 @@ export const ServicesSection = () => {
     });
   }, [needFilter, budgetFilter, delayFilter]);
 
+  const orderedServices = useMemo(() => {
+    return [...filteredServices].sort((a, b) => {
+      if (a.slug === "developpement-web") return -1;
+      if (b.slug === "developpement-web") return 1;
+      return 0;
+    });
+  }, [filteredServices]);
+
   return (
     <section id="services" className="relative py-20 md:py-24">
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -244,7 +252,7 @@ export const ServicesSection = () => {
           </h2>
           <p className="max-w-3xl mx-auto text-base leading-relaxed md:text-lg text-slate-300">
             Filtrez nos offres par besoin, budget et délai. Chaque service affiche
-            un résultat attendu, un mini cas concret et des actions directes.
+            un résultat attendu et des actions directes.
           </p>
         </div>
 
@@ -295,7 +303,7 @@ export const ServicesSection = () => {
         </div>
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {filteredServices.map((service, index) => {
+          {orderedServices.map((service, index) => {
             const profile = getServiceProfile(service);
             return (
               <motion.div
@@ -347,21 +355,6 @@ export const ServicesSection = () => {
                 <p className="relative z-10 mt-3 text-sm leading-relaxed text-slate-400">
                   {service.description}
                 </p>
-
-                <div className="relative z-10 p-3 mt-4 border rounded-xl bg-slate-800/60 border-white/10">
-                  <p className="text-xs font-semibold text-slate-200">Mini cas</p>
-                  <p className="mt-1 text-xs text-slate-400">
-                    <span className="text-slate-300">Problème:</span>{" "}
-                    {profile.miniCase.problem}
-                  </p>
-                  <p className="mt-1 text-xs text-slate-400">
-                    <span className="text-slate-300">Solution:</span>{" "}
-                    {profile.miniCase.solution}
-                  </p>
-                  <p className="mt-2 text-xs font-semibold text-cyan-300">
-                    Résultat: {profile.miniCase.result}
-                  </p>
-                </div>
 
                 <div className="relative z-10 flex flex-col gap-2 mt-5 sm:flex-row sm:flex-wrap sm:mt-auto">
                   <Button href={profile.ctaPrimaryHref} size="sm" className="w-full sm:w-auto">

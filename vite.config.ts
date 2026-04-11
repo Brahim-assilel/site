@@ -275,6 +275,15 @@ export default defineConfig({
             const html = `<!doctype html>
 <html lang="fr">
   <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CB8SFNSJC3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-CB8SFNSJC3');
+    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>${shareEscapeHtml(title)}</title>
@@ -876,3 +885,5 @@ export default defineConfig({
     },
   ],
 });
+
+
